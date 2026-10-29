@@ -1,0 +1,14 @@
+[
+  {"id": "business/rag-for-execs", "domain": "business",
+   "topic": "Why our company should adopt Retrieval-Augmented Generation",
+   "audience": "non-technical executives", "slides": 6},
+  {"id": "business/remote-work-findings", "domain": "business",
+   "topic": "Findings from our remote work survey",
+   "audience": "HR leadership", "slides": 6, "source": "sources/remote_work_survey.md"},
+  {"id": "technical/intro-transformers", "domain": "technical",
+   "topic": "How transformer models work",
+   "audience": "first-year data science students", "slides": 6},
+  {"id": "technical/ci-pipelines", "domain": "technical",
+   "topic": "Setting up a CI pipeline for a Python project",
+   "audience": "junior software engineers", "slides": 6}
+]

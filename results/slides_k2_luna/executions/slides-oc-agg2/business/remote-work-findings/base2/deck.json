@@ -1,0 +1,72 @@
+[
+  {
+    "layout": "title",
+    "title": "Remote Work Survey: Key Findings for HR",
+    "bullets": [
+      "Analyzing employee needs for a sustainable future of work"
+    ],
+    "notes": "Good morning. Today we're presenting the key findings from our 2026 Remote Work Survey. The goal is to translate these employee insights into actionable strategies that support both productivity and retention for HR leadership."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid Work is the Clear Choice for Employees",
+    "bullets": [
+      "47% prefer a hybrid schedule (2-3 days in office)",
+      "64% of hybrid workers want to maintain current setup",
+      "Commute time is the top driver for remote preference"
+    ],
+    "notes": "The data clearly shows a strong preference for flexibility. While fully remote is significant, the hybrid model is the dominant choice. We must ensure our policies support this balance while addressing the core reason: reducing the burden of the commute."
+  },
+  {
+    "layout": "content",
+    "title": "Productivity is Up, But Isolation is a Risk",
+    "bullets": [
+      "Burnout scores improved significantly since 2024",
+      "58% report higher productivity when working remotely",
+      "Fully remote staff report high levels of isolation"
+    ],
+    "notes": "On a positive note, our wellbeing scores have improved, indicating successful adjustments. However, the data on isolation for fully remote staff is a major red flag. We need strategies to build digital connection and team cohesion for these employees."
+  },
+  {
+    "layout": "content",
+    "title": "Optimize In-Person Time for Collaboration",
+    "bullets": [
+      "Meeting frequency increased from 9 to 13 per week",
+      "67% find at least one-third of meetings unnecessary",
+      "New hires perform better when onboarding in person"
+    ],
+    "notes": "We are spending too much time in unnecessary meetings. The data suggests we need to actively audit our meeting culture. Furthermore, the onboarding gap for remote new hires is critical\u2014we need to structure their initial months to replicate the benefits of being physically present."
+  },
+  {
+    "layout": "content",
+    "title": "Flexibility is Critical to Employee Retention",
+    "bullets": [
+      "29% would likely seek other jobs without remote options",
+      "Commute time is the primary factor in job satisfaction",
+      "Maintaining flexibility is key to keeping top talent"
+    ],
+    "notes": "This is the most critical finding. Our employees view flexibility not as a perk, but as a core expectation of the job. If we lose this flexibility, we face a significant retention risk. HR must champion policies that protect and enhance remote work options."
+  },
+  {
+    "layout": "content",
+    "title": "Strategic Recommendations for the Future of Work",
+    "bullets": [
+      "Adopt hybrid work as the default company standard",
+      "Implement structured, in-person onboarding for new hires",
+      "Run a meeting audit and establish focus time blocks",
+      "Fund quarterly team gatherings for fully remote staff"
+    ],
+    "notes": "To summarize, our recommendations are focused on structure, connection, and efficiency. By adopting a hybrid default, improving onboarding, and managing meeting culture, we can mitigate the risks identified and build a sustainable, high-performing workplace."
+  },
+  {
+    "layout": "content",
+    "title": "Key Takeaways: Building a Flexible Future",
+    "bullets": [
+      "Prioritize hybrid work as the default policy",
+      "Invest in intentional connection and onboarding",
+      "Audit meetings and protect deep focus time",
+      "Address isolation proactively to maintain wellbeing"
+    ],
+    "notes": "To conclude, the path forward requires intentional policy changes. We must move from simply 'allowing' remote work to actively 'designing' a flexible, connected, and high-performing hybrid experience. These four points are our immediate priorities."
+  }
+]

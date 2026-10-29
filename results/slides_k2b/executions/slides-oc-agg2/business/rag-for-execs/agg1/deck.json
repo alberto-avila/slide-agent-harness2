@@ -1,0 +1,77 @@
+[
+  {
+    "layout": "title",
+    "title": "Securing AI Reliability for Business Growth",
+    "bullets": [
+      "Harnessing Proprietary Data for Enterprise AI"
+    ],
+    "notes": "Good morning. Today, we are not talking about a technical upgrade; we are talking about a strategic necessity. As AI becomes central to our operations, we must ensure that the intelligence we build is reliable, accurate, and grounded in our company's unique knowledge. This presentation outlines how we can do that."
+  },
+  {
+    "layout": "section",
+    "title": "Our Strategic Path to AI Adoption",
+    "bullets": [
+      "The current risks of general AI",
+      "How RAG solves the accuracy problem",
+      "Tangible ROI and business value",
+      "A phased plan for implementation",
+      "Clear next steps for action"
+    ],
+    "notes": "Over the next few minutes, we will walk through a clear path. We will first define the risks we face today, then introduce RAG as the necessary solution, quantify the business value, and finally, present a manageable roadmap to adoption. The goal is to move from concept to concrete action."
+  },
+  {
+    "layout": "content",
+    "title": "General AI Risks Threaten Accuracy and Compliance",
+    "bullets": [
+      "Inaccurate answers (Hallucinations)",
+      "Ignoring proprietary company data",
+      "Increased operational and compliance risk",
+      "Lack of verifiable sources"
+    ],
+    "notes": "The primary risk with off-the-shelf AI is that it is trained on the public internet. It does not know our specific policies, our client data, or our internal best practices. This leads to 'hallucinations'\u2014making up facts\u2014which is unacceptable in a regulated industry. We are exposing ourselves to significant operational and compliance risk."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Grounds AI in Our Proprietary Knowledge Base",
+    "bullets": [
+      "Retrieving relevant internal documents",
+      "Augmenting AI answers with facts",
+      "Ensuring answers are verifiable and accurate",
+      "Minimizing reliance on general knowledge"
+    ],
+    "notes": "RAG, or Retrieval-Augmented Generation, is the fix. Think of it this way: Instead of letting the AI guess, we are giving it a locked-down, secure library of only our company's best manuals, policies, and reports. It first retrieves the correct documents, and *then* it uses those documents to formulate the answer. This makes the output reliable and directly attributable to us."
+  },
+  {
+    "layout": "content",
+    "title": "Driving Measurable ROI Through Internal Intelligence",
+    "bullets": [
+      "Reducing time-to-answer for employees",
+      "Accelerating compliance and audit processes",
+      "Empowering faster, data-driven decisions",
+      "Lowering operational risk exposure"
+    ],
+    "notes": "This is where the investment pays off. By giving our employees instant, accurate access to our collective knowledge, we dramatically reduce the time they spend searching for answers. We improve compliance by ensuring every answer is traceable to an approved document. This translates directly into efficiency gains and a measurable reduction in risk."
+  },
+  {
+    "layout": "content",
+    "title": "Phased Roadmap: A Low-Risk Path to Adoption",
+    "bullets": [
+      "Phase 1: Pilot (Legal/HR knowledge base)",
+      "Phase 2: Scale (Cross-departmental deployment)",
+      "Phase 3: Govern (Enterprise-wide policy and governance)",
+      "Establish clear success metrics and ownership"
+    ],
+    "notes": "We are not asking for a massive, immediate overhaul. We propose a phased approach. We start small\u2014a pilot in a contained, high-value area like Legal or HR. Once we prove the value and refine the process, we scale, and finally, we establish enterprise-wide governance to ensure long-term success. This minimizes risk and maximizes learning."
+  },
+  {
+    "layout": "section",
+    "title": "Next Step: Approve Funding for Pilot Program",
+    "bullets": [
+      "Form a cross-functional steering committee",
+      "Allocate resources for Phase 1 pilot (Legal)",
+      "Define clear governance and success metrics",
+      "Secure our competitive advantage with reliable AI"
+    ],
+    "notes": "To summarize, general AI is too risky for our core operations. RAG provides the necessary guardrails, transforming our internal data into a strategic asset. Our immediate ask is approval to form a steering committee and dedicate resources to the initial pilot program. This is the critical step to securing our AI future and maintaining our competitive edge."
+  }
+]

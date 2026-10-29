@@ -1,0 +1,78 @@
+[
+  {
+    "layout": "title",
+    "title": "Recommendation: Pilot RAG for Knowledge Retrieval",
+    "bullets": [
+      "Piloting RAG will improve knowledge accuracy and efficiency.",
+      "A targeted pilot is required to assess business fit and risk."
+    ],
+    "notes": "Speaker Notes: This is the executive summary. We are not recommending full adoption, but a bounded pilot. The goal is to move from generalized AI exploration to a measurable, high-impact business use case. We need to prove value before scaling. The key takeaway is that the next step is a pilot, not a purchase order for a full system."
+  },
+  {
+    "layout": "content",
+    "title": "Knowledge Gaps Hinder Operational Consistency",
+    "bullets": [
+      "Information scattered across multiple systems",
+      "Difficulty finding definitive, single sources",
+      "High risk of outdated or conflicting data",
+      "Wasted employee time searching for answers"
+    ],
+    "notes": "Speaker Notes: Our current process relies on employees remembering where information lives, or manually searching through disparate systems. This leads to 'tribal knowledge' silos. The impact is measurable: time wasted, incorrect decisions, and inconsistent customer/employee experiences. We need a reliable, single source of truth."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Grounds AI in Our Company Data",
+    "bullets": [
+      "Retrieves relevant documents before generating answers",
+      "Connects AI to our authoritative, internal knowledge base",
+      "Provides citations for every generated answer",
+      "Does not replace human expertise or judgment"
+    ],
+    "notes": "Speaker Notes: Unlike general LLMs, which are trained on the public internet, RAG acts like an intelligent research assistant. It first searches our internal documents (the retrieval step) and then uses those specific documents to formulate the answer (the generation step). This grounding is critical because it makes the output traceable and verifiable. We must emphasize that RAG is a tool, not a decision-maker."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Improves Accuracy Beyond Simple Search",
+    "bullets": [
+      "Synthesizes answers from multiple sources",
+      "Reduces reliance on manual interpretation",
+      "Identifies connections across documents",
+      "Superior to basic keyword search tools"
+    ],
+    "notes": "Speaker Notes: Simple search tools only give you a list of documents. RAG does the work of synthesizing that information and answering the question directly. This is a significant leap in capability. We are hypothesizing that this capability will reduce the time spent finding answers by X% and improve compliance by Y%."
+  },
+  {
+    "layout": "content",
+    "title": "Pilot Plan: Refining Knowledge Search for [Specific Dept]",
+    "bullets": [
+      "Use Case: Answering complex policy questions",
+      "Data Source: [Specific, authoritative] internal policy documents",
+      "Owner: [Department Head] (Accountability)",
+      "Baseline Metric: Time to answer policy query",
+      "Success Measure: Reduction in incorrect policy application"
+    ],
+    "notes": "Speaker Notes: We recommend a tightly scoped pilot. We must define the scope: which department, which specific documents, and what measurable outcome. This avoids scope creep and allows us to prove ROI. We must also define the access controls and data governance upfront. This pilot is designed to prove the value, not to scale the technology."
+  },
+  {
+    "layout": "content",
+    "title": "Decision Needed: Proceed with Bounded Pilot",
+    "bullets": [
+      "Approve funding and resources for the pilot phase",
+      "Define the specific scope and success metrics",
+      "Establish data governance and access controls first",
+      "Identify key dependencies (e.g., data cleanliness, owner buy-in)"
+    ],
+    "notes": "Speaker Notes: Our recommendation is clear: approve the pilot. This is a phased approach that manages risk. We are not asking for a full-scale rollout today. We must, however, acknowledge material open questions, such as the long-term maintenance of the source data and the full integration into existing workflows. These must be addressed before scaling."
+  },
+  {
+    "layout": "content",
+    "title": "Key Takeaways: Phased Adoption is the Path Forward",
+    "bullets": [
+      "RAG solves knowledge inconsistency by grounding AI in internal data.",
+      "Value is proven through targeted, measurable pilots.",
+      "Adoption must be phased, starting with a bounded scope.",
+      "The next step is defining the pilot scope and governance."
+    ],
+    "notes": "Speaker Notes: To summarize, we have identified a clear problem (knowledge gaps) and a promising solution (RAG). However, the complexity and risk require a controlled, phased approach. We are not recommending a full rollout; we are recommending a defined pilot to prove the value and manage the risk. This keeps the decision manageable and measurable."
+  }
+]

@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slide agent + Harness² — project report</title>
+<style>
+.viz-root { color-scheme: light; --page: #f9f9f7; --surface-1: #fcfcfb; --text-primary: #0b0b0b; --text-secondary: #52514e;
+  --muted: #898781; --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a;
+  --add: #006300; --del: #b42318; --code-bg: #f0efec; --callout-bg: #fdf3e7; --callout-edge: #eb6834; }
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .viz-root { color-scheme: dark; --page: #0d0d0d; --surface-1: #1a1a19; --text-primary: #f0efec; --text-secondary: #c3c2b7;
+  --muted: #898781; --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+  --add: #0ca30c; --del: #e66767; --code-bg: #262624; --callout-bg: #2a1f17; --callout-edge: #d95926; }
+}
+:root[data-theme="dark"] .viz-root { color-scheme: dark; --page: #0d0d0d; --surface-1: #1a1a19; --text-primary: #f0efec; --text-secondary: #c3c2b7;
+  --muted: #898781; --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+  --add: #0ca30c; --del: #e66767; --code-bg: #262624; --callout-bg: #2a1f17; --callout-edge: #d95926; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+.viz-root { background: var(--page); color: var(--text-primary); min-height: 100vh;
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 40px 24px 80px; }
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; }
+h2 { font-size: 22px; margin: 48px 0 12px; padding-top: 8px; border-top: 1px solid var(--grid); }
+h3 { font-size: 17px; margin: 28px 0 8px; }
+h4 { margin: 0 0 6px; font-size: 15px; } h5 { margin: 14px 0 6px; font-size: 14px; color: var(--text-secondary); }
+p, li { color: var(--text-primary); } .muted { color: var(--text-secondary); }
+.sub { color: var(--text-secondary); margin: 0 0 24px; }
+code { font: 13px/1.4 ui-monospace, "Cascadia Code", Consolas, monospace; background: var(--code-bg);
+  padding: 1px 5px; border-radius: 4px; }
+pre { font: 12.5px/1.5 ui-monospace, "Cascadia Code", Consolas, monospace; background: var(--surface-1);
+  border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; white-space: pre-wrap; }
+pre .add { color: var(--add); } pre .del { color: var(--del); } pre .hunk { color: var(--muted); }
+.tldr { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; }
+.tldr li { margin: 6px 0; }
+.callout { background: var(--callout-bg); border: 1px solid var(--border); border-left: 4px solid var(--callout-edge);
+  border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+.callout h3 { margin: 0 0 6px; font-size: 16px; } .callout p { margin: 6px 0; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+blockquote { margin: 8px 0 0; padding: 4px 14px; border-left: 3px solid var(--axis); color: var(--text-secondary); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--surface-1);
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; font-size: 13px; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.scroll { overflow-x: auto; }
+details summary { cursor: pointer; margin: 6px 0; }
+.lesson li { margin: 4px 0; }
+.figure { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px 16px 8px; margin: 16px 0; }
+.figure h4 { margin-bottom: 2px; } .figure .cap { color: var(--text-secondary); font-size: 13px; margin: 0 0 8px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text-secondary); margin: 4px 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+svg text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+.tip { position: fixed; pointer-events: none; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12); opacity: 0; transition: opacity .1s; max-width: 260px; z-index: 10; }
+.tip strong { font-size: 15px; } .tip .k { color: var(--text-secondary); }
+.toggle { float: right; font: inherit; font-size: 13px; background: var(--surface-1); color: var(--text-secondary);
+  border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; margin: 12px 0; }
+.flow div { flex: 1 1 150px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+.flow b { display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+<main>
+<button class="toggle" id="theme">Toggle dark mode</button>
+<h1>A slide-generating agent, improved with Google's Harness²</h1>
+<p class="sub">Project report · 2026-10-29 · judge of record: <code>OpenAILLM:gpt-6-astra</code></p>
+
+<div class="tldr">
+<h3 style="margin-top:0">Summary</h3>
+<ul>
+<li><strong>What was built:</strong> a local, tool-calling slide agent (Gemma 4 via Ollama, python-pptx output), connected to
+Google Research's Harness² through a custom benchmark adapter, a pluggable improver, and a separate GPT-6 Astra judge.
+Harness² was made to run natively on Windows with three small patches.</li>
+<li><strong>Experiment:</strong> the full Harness² loop on two business tasks at <code>--k 2</code>, run twice with the same slide-writing model
+(Gemma) and the same 4 baseline decks, changing only the <strong>improver</strong>: local <code>gemma4</code>, then OpenAI's <code>gpt-6-luna</code>.</li>
+<li><strong>Outcome:</strong> with Gemma as improver, the adopted harnesses scored +0.5 and 0 points over the baseline (out of 25), which is noise.
+With Luna they scored <strong>+0.5 and +2.0</strong>, the first gain that reaches the ±1-point noise band's edge. Across all 12 decks
+from each improver's harnesses, the averages were 13.1 (Luna) vs 12.7 (Gemma) vs a 12.75 baseline. This is suggestive, not conclusive: one sample per harness.</li>
+<li><strong>Main finding:</strong> the improver decides <em>what</em> gets optimized. Gemma pushed the harness toward persuasive "mandates" that the
+judge penalized as inaccurate. Luna pushed it toward slide-count discipline and source fidelity, adding an <code>hr_survey_deck</code> skill that
+reads like a list of the judge's own complaints. Its selector also chose on fidelity, where Gemma's chose on slide count.</li>
+<li><strong>Cost:</strong> Luna's improver calls cost <strong>about $0.05</strong> for the whole run (305k tokens). Judging with GPT-6 Astra was the larger API cost.</li>
+</ul>
+</div>
+
+<div class="callout">
+<h3>⚠ Potential conflict: the improver and the judge are both OpenAI models</h3>
+<p>In the Luna run, the model that rewrote the harness (<code>gpt-6-luna</code>) and the model that scored the results (<code>gpt-6-astra</code>) come from
+the same provider and likely share training data and notions of what a good deck looks like. A harness that Luna considers better may score higher with
+Astra partly because the two models <em>agree with each other</em>, not only because the decks got better for a human audience. That would overstate Luna's advantage over Gemma.</p>
+<p>The design limits but does not remove this risk. The improver never sees scores or the rubric; Harness² forbids words like "score" and
+"rubric" in the improver's prompts; and the judge's main complaints (misstated statistics, invented causation) can be checked against the source document.</p>
+<p><strong>We will address this in future work</strong> by testing improvers from other model families against the same judge, for example
+Anthropic's Claude, Google's Gemini, or local models already installed here such as <code>gpt-oss:20b</code> and <code>qwen3</code>, and by cross-checking
+results with a judge from a different family than the improver.</p>
+</div>
+
+<h2>Findings</h2>
+<h3>1. The improver decides what gets optimized</h3>
+<p>Harness² never shows the improver a score, so it can only optimize what it can see in the trajectories and decks.
+<strong>Gemma</strong> rewarded visible structure: both of its adopted harnesses converged on a "mandatory persuasive narrative arc" with business-risk framing,
+and the judge penalized the resulting distortions. Every remote-work deck from Gemma's harnesses scored 1/5 for accuracy.
+<strong>Luna</strong> spotted that the agent kept adding an unplanned seventh slide after the critique step, made the requested slide count binding,
+and on the survey task added a skill whose rules include "do not turn a survey finding into a causal claim" and "preserve qualifiers such as 'likely'".
+That deck was the only remote-work deck in either run to reach 2/5 for accuracy, and it scored 14/25 against a 12/25 baseline.</p>
+
+<h3>2. Luna was more careful about evidence, and that emptied the library</h3>
+<p>For every edit, Luna marked the verdict <em>confounded</em>, because each candidate changed several files at once and so no single contrast isolates an edit.
+Following Harness²'s instructions for that case, it then declined to write a lesson (<code>NO_ENTRY</code>) on both tasks. Gemma, given the same instructions,
+marked every edit "helped" and wrote "high confidence" lessons. Luna's behavior is the correct one, but it meant the library stayed empty and nothing carried over
+from task 1 to task 2, so the Luna run tests single-task improvement only.</p>
+
+<h3>3. The selectors chose differently</h3>
+<p>Gemma's selector decided both tasks on <em>conformance</em> to the slide count ("7 slides vs 8"). Luna's weighed fidelity: "B invents a three-month pilot
+duration… not requested or supported"; "A… calls the burnout decrease 'significant,' which the source does not establish". In all four selections the chosen
+final was the one the judge rated higher, but Luna's reasons are the kind a human reviewer would give.</p>
+
+<h3>4. The slide-writing model still caps quality</h3>
+<p>All 28 decks scored 11–16 out of 25. The best deck of the project was a Luna candidate (<code>rag-for-execs/dom2</code>, 16/25), but it was not one of the
+composed finals Harness² can adopt. Accuracy remains the weakest criterion in every group (means of 1.25 base, 1.42 Gemma-improved, 1.58 Luna-improved).
+Guidance text can reduce errors, but a 4B-class model still misreads statistics; a stronger executor or a fidelity tool is needed for larger gains.</p>
+
+<h3>5. Evaluation hygiene changed the conclusions</h3>
+<p>Several design choices changed the conclusions along the way:</p>
+<ul>
+<li>a judge from a different family than the executor (self-grading Gemma gave all 5s);</li>
+<li>points instead of a pass mark (a 4/5 pass mark hid every difference);</li>
+<li>checking Harness²'s <code>fell_back</code> records (one resumed run silently used the base harness everywhere yet still wrote a confident lesson);</li>
+<li>a shared, reused baseline, so both improvers are compared against identical base decks and scores rather than two noisy re-judgings.</li>
+</ul>
+<p>Gemma's improver also never saw its full evidence: its 60k-character budget dropped files from every composition prompt. Luna saw everything.</p>
+
+<h3>Recommended next steps</h3>
+<ol>
+<li><strong>Test improvers from other model families</strong> (Claude, Gemini, <code>gpt-oss:20b</code>, <code>qwen3</code>) against the same judge, and cross-check with a judge
+from a different family than the improver. This addresses the same-provider conflict above.</li>
+<li><strong>Un-confound the edits</strong> so lessons can be recorded: use <code>--mode sequential</code>, or have candidates change one component at a time, so the improver can attribute effects and fill the library.</li>
+<li><strong>Repeat with more samples</strong> (more tasks, the technical domain, higher <code>--k</code>) before treating a 2-point gain as real.</li>
+<li><strong>Give the agent a fidelity tool</strong>, for example a critique check that compares every number on a slide against the source, so Harness² has a mechanism it can strengthen.</li>
+<li><strong>Keep one pinned judge</strong> for every comparison, and treat differences under about 2 points as noise.</li>
+</ol>
+
+
+<h2>1. What was built</h2>
+<h3>The slide agent</h3>
+<p>A deliberately simple Python agent (<code>slide_agent/</code>) that turns a topic, an audience and an optional source
+document (.txt, .md, .pdf) into a PowerPoint deck. It runs on a local model, <code>gemma4:latest</code> through Ollama,
+using a <strong>tool-calling loop</strong>: each turn the model replies with one JSON object, <code>{"thought", "tool", "args"}</code>.
+The agent runs the tool and returns the result as the next message. This JSON protocol works with models that have no
+native tool calling, and switching providers means adding one class to <code>slide_agent/llm.py</code>.</p>
+<p>Tools: <code>read_source</code>, <code>plan_outline</code>, <code>add_slide</code>, <code>edit_slide</code>, <code>delete_slide</code>,
+<code>view_deck</code>, <code>critique_deck</code> (rule-based checks against the best practices) and <code>save_deck</code> (python-pptx, with speaker notes).
+It is intentionally unoptimized: no retries, no context trimming, a rule-based critique. That leaves room for a harness optimizer to find improvements.</p>
+
+<h3>The Harness² integration</h3>
+<p><a href="https://github.com/google-research/harness2">Harness²</a> (Google Research, Apache 2.0) improves the <em>harness</em> around a
+fixed model (prompts, guardrails, memory, tool guidance, skills) without changing model weights. To connect our agent, the guidance
+text moved out of code into editable files in <code>harness_base/</code>, and a custom benchmark was written against Harness²'s
+<code>BenchmarkAdapter</code> protocol.</p>
+<div class="scroll"><table>
+<tr><th>Piece</th><th>File</th><th>Role</th></tr>
+<tr><td>Editable harness</td><td><code>harness_base/</code></td><td><code>systemprompt.md</code>, <code>guardrails.md</code>, <code>LongTermMEMORY.md</code>, <code>tool_descriptions/tool_guidance.md</code>, <code>skills/*/SKILL.md</code>. The JSON protocol and tool signatures stay in code so edits can't break parsing.</td></tr>
+<tr><td>Benchmark adapter</td><td><code>h2/adapter.py</code></td><td>Tasks, domains, and <code>execute()</code>, which runs the agent with a candidate harness and writes the trajectory in Harness²'s <code>[ACTION]/[OBSERVATION]</code> format.</td></tr>
+<tr><td>Tasks</td><td><code>h2/tasks.json</code></td><td>4 decks in 2 domains (business, technical). One task uses a source document (a remote-work survey).</td></tr>
+<tr><td>Improver</td><td><code>h2/chat_proposer.py</code></td><td>Replaces upstream's Vertex AI agent session with a chat model, either local Ollama or an OpenAI model. It pastes the evidence folder into the prompt (a 60k-character budget locally, the full folder for API models), applies whole-file <code>&lt;file&gt;</code> edits, caches replies per model under upstream's fingerprint, and records tokens and cost.</td></tr>
+<tr><td>Judge</td><td><code>h2/judge.py</code></td><td>8 rule checks plus a 5-criterion rubric with anchored 1–5 ratings, graded by a separate, stronger model. It runs only after selection, so the improver never sees scores.</td></tr>
+<tr><td>Runner and tools</td><td><code>h2/run.py</code>, <code>h2/rescore.py</code>, <code>h2/report_html.py</code></td><td>Run the recursion per domain, re-judge finished rollouts (reusing scores for identical decks), and generate this report.</td></tr>
+</table></div>
+
+<h2>2. How Harness² works</h2>
+<div class="flow">
+<div><b>1 · Base</b>Run the agent with the unmodified harness (twice at <code>--k 2</code>).</div>
+<div><b>2 · Propose</b>The improver reads the trajectories and decks and edits the harness: <code>inv</code> candidates make general edits, <code>dom</code> candidates make domain-specific edits.</div>
+<div><b>3 · Probe</b>Re-run the same task with each candidate harness.</div>
+<div><b>4 · Compose</b>Merge what seemed to help into <code>agg</code> finals, run them, and let the selector (the improver model) pick one with a written reason.</div>
+<div><b>5 · Remember</b>Store the adopted harness and a cue/lesson/evidence entry in a per-domain library that later tasks read.</div>
+</div>
+<p>No step uses a ground-truth score. The improver and the selector judge only from the evidence, and the benchmark prompts are
+not allowed to mention "score", "rubric" or "grader". A separate judge scores the outcome afterwards, so we can measure whether the harness actually improved.</p>
+
+<h2>3. Experiment setup</h2>
+<ul>
+<li><strong>Domain:</strong> business, 2 tasks run in order: <code>rag-for-execs</code> (a pitch to non-technical executives) and
+<code>remote-work-findings</code> (a deck for HR leadership built from a survey document). The second task starts with the first task's lesson in the library.</li>
+<li><strong>Budget:</strong> <code>--k 2 --mode parallel</code>, giving 8 rollouts per task (2 base, 2 inv, 2 dom, 2 agg).</li>
+<li><strong>Improvers compared (2):</strong> <code>ollama:gemma4:latest</code> (gemma4 (local)), <code>openai:gpt-6-luna</code> (gpt-6-luna (OpenAI)). Every run starts from the <em>same</em> 4 base rollouts, with their judge
+scores reused rather than re-judged, so the improvers are compared against an identical baseline. That makes 28 distinct decks in total.</li>
+<li><strong>Executor:</strong> <code>gemma4:latest</code> (local) in every run. <strong>Judge:</strong> <code>OpenAILLM:gpt-6-astra</code>.</li>
+<li><strong>Scoring:</strong> rules passed out of 8, plus rubric points out of 25 (story, assertion titles, audience fit, accuracy, speaker notes).
+Re-judging the same deck varies by about ±1 point, so smaller differences are noise.</li>
+</ul>
+
+<h2>4. Results</h2>
+<div class="scroll"><table>
+<tr><th>Improver</th><th>Task</th><th class="num">Base mean</th><th>Chosen</th><th class="num">Chosen</th><th class="num">Change</th><th>Composed finals</th><th>Stages that fell back</th></tr>
+<tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td class='num'>13.5</td><td><code>agg1</code></td><td class='num'>14</td><td class='num'>+0.5</td><td><code>agg1</code> 14, <code>agg2</code> 13</td><td>none</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td class='num'>12.0</td><td><code>agg1</code></td><td class='num'>12</td><td class='num'>+0.0</td><td><code>agg1</code> 12, <code>agg2</code> 11</td><td>none</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td class='num'>13.5</td><td><code>agg1</code></td><td class='num'>14</td><td class='num'>+0.5</td><td><code>agg1</code> 14, <code>agg2</code> 12</td><td>none</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td class='num'>12.0</td><td><code>agg2</code></td><td class='num'>14</td><td class='num'>+2.0</td><td><code>agg1</code> 12, <code>agg2</code> 14</td><td>none</td></tr>
+</table></div>
+<p class="muted">Rubric points out of 25. Every deck passed at least 6 of the 8 formatting rules, so the rubric carries the comparison.</p>
+
+<div class="figure">
+<h4>Rubric points for every deck, by improver and candidate type</h4>
+<p class="cap">Each dot is one deck (out of 25). The larger labelled dot is the deck Harness² adopted; the vertical line is the shared base-harness mean.</p>
+<div id="strip"></div>
+</div>
+
+<div class="figure">
+<h4>Mean rating per criterion: base decks vs decks from each improver's harnesses</h4>
+<p class="cap">1 = poor, 5 = excellent. Improved decks are the inv, dom and agg rollouts. Values are labelled on every bar.</p>
+<div class="legend" id="crit-legend"></div>
+<div id="crit"></div>
+</div>
+<p>The weakest criterion overall is <strong>accuracy</strong> (mean 1.5 out of 5). Judge reasons on the base harness:</p>
+<ul><li><code>rag-for-execs</code>: Slides 4–6 falsely imply that RAG guarantees factual answers based only on vetted documents, Slide 5 equates it with building a knowledge graph, and Slide 7 postpones governance until after scaling.</li><li><code>remote-work-findings</code>: Slide 3 incorrectly presents work-arrangement shares as preferences, slide 4 calls the burnout improvement significant without supporting analysis, and slide 6 changes the source&#x27;s onboarding recommendation into a mandate while omitting its first-month scope.</li></ul>
+
+<details><summary>Table view: all 28 decks</summary>
+<div class="scroll"><table>
+<tr><th>Harness from</th><th>Task</th><th>Rollout</th><th class="num">Rules</th><th class="num">Rubric</th><th class="num">Story</th><th class="num">Titles</th><th class="num">Audience</th><th class="num">Accuracy</th><th class="num">Notes</th></tr>
+<tr><td>Base harness (shared)</td><td><code>rag-for-execs</code></td><td><code>base1</code></td><td class='num'>8/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>3</td></tr><tr><td>Base harness (shared)</td><td><code>rag-for-execs</code></td><td><code>base2</code></td><td class='num'>8/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>Base harness (shared)</td><td><code>remote-work-findings</code></td><td><code>base1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>Base harness (shared)</td><td><code>remote-work-findings</code></td><td><code>base2</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td><code>inv1</code></td><td class='num'>8/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td><code>inv2</code></td><td class='num'>8/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>3</td></tr><tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td><code>dom1</code></td><td class='num'>8/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td><code>dom2</code></td><td class='num'>7/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td><code>agg1</code></td><td class='num'>8/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gemma4 (local)</td><td><code>rag-for-execs</code></td><td><code>agg2</code></td><td class='num'>8/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td><code>inv1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td><code>inv2</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td><code>dom1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td><code>dom2</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td><code>agg1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gemma4 (local)</td><td><code>remote-work-findings</code></td><td><code>agg2</code></td><td class='num'>8/8</td><td class='num'><strong>11</strong>/25</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td><code>inv1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td><td class='num'>1</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td><code>inv2</code></td><td class='num'>7/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td><code>dom1</code></td><td class='num'>8/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td><code>dom2</code></td><td class='num'>7/8</td><td class='num'><strong>16</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>4</td><td class='num'>3</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td><code>agg1</code></td><td class='num'>8/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>rag-for-execs</code></td><td><code>agg2</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>1</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td><code>inv1</code></td><td class='num'>8/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td><code>inv2</code></td><td class='num'>6/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td><code>dom1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td><code>dom2</code></td><td class='num'>8/8</td><td class='num'><strong>13</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>3</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td><code>agg1</code></td><td class='num'>8/8</td><td class='num'><strong>12</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>1</td><td class='num'>2</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>remote-work-findings</code></td><td><code>agg2</code></td><td class='num'>8/8</td><td class='num'><strong>14</strong>/25</td><td class='num'>3</td><td class='num'>3</td><td class='num'>3</td><td class='num'>2</td><td class='num'>3</td></tr>
+</table></div></details>
+
+<h3>Improver cost</h3>
+<div class="scroll"><table>
+<tr><th>Run</th><th>Improver</th><th class="num">Calls</th><th class="num">Input tokens</th><th class="num">Output tokens</th><th class="num">Cost</th></tr>
+<tr><td>gemma4 (local)</td><td><code>ollama:gemma4:latest</code></td><td class='num'>16</td><td class='num'>n/a</td><td class='num'>n/a</td><td class='num'>local (free)</td></tr><tr><td>gpt-6-luna (OpenAI)</td><td><code>openai:gpt-6-luna</code></td><td class='num'>16</td><td class='num'>260,341</td><td class='num'>44,928</td><td class='num'>$0.048</td></tr>
+</table></div>
+<p class="muted">Improver calls only; judge calls are extra. API prices from OpenAI's models page on 2026-10-29.</p>
+
+<h3>Selection decisions</h3>
+<div class='card'><h4>gemma4 (local) · <code>rag-for-execs</code></h4><p class='muted'>The selector chose <code>agg1</code> from the composed finals (<code>agg1</code> = 14/25, <code>agg2</code> = 13/25 by the judge).</p><blockquote>The choice was decided by CONFORMANCE. Candidate A is closer to the requested length of a &quot;~6-slide presentation&quot; (7 slides) compared to Candidate B (8 slides). Candidate A maintains a tighter, more focused narrative arc, concluding with a direct and actionable &quot;Next Step&quot; slide, which is ideal for a non-technical executive audience.</blockquote></div><div class='card'><h4>gemma4 (local) · <code>remote-work-findings</code></h4><p class='muted'>The selector chose <code>agg1</code> from the composed finals (<code>agg1</code> = 12/25, <code>agg2</code> = 11/25 by the judge).</p><blockquote>The deciding criterion is CONFORMANCE. Candidate A adheres perfectly to the requested length of a &quot;~6-slide presentation,&quot; maintaining a tight, focused narrative arc. Candidate B includes an unnecessary seventh slide (&quot;Summary: A Strategic Investment in People&quot;), which deviates from the requested shape and dilutes the impact of the final Call to Action.</blockquote></div><div class='card'><h4>gpt-6-luna (OpenAI) · <code>rag-for-execs</code></h4><p class='muted'>The selector chose <code>agg1</code> from the composed finals (<code>agg1</code> = 14/25, <code>agg2</code> = 12/25 by the judge).</p><blockquote>Both provide six slides with a clear progression and speaker notes.
+Fidelity and restraint decide it: B invents a three-month pilot duration and specific funding and task-force actions not requested or supported.
+A is the closer runner-up, though its notes overstate that RAG answers only from retrieved context and makes outputs trustworthy.</blockquote></div><div class='card'><h4>gpt-6-luna (OpenAI) · <code>remote-work-findings</code></h4><p class='muted'>The selector chose <code>agg2</code> from the composed finals (<code>agg1</code> = 12/25, <code>agg2</code> = 14/25 by the judge).</p><blockquote>B best meets the requested ~6-slide length and presents a clear progression from findings to action.
+It also keeps the factual claims aligned with the source.
+A is the closest runner-up, but it has 7 slides and calls the burnout decrease “significant,” which the source does not establish.</blockquote></div>
+
+<h3>What Harness² learned and changed</h3>
+<div class='card'><h4>gemma4 (local) · <code>rag-for-execs</code></h4><ul class='lesson'><li><strong>cue</strong>: When generating persuasive content for a high-stakes, non-technical audience (e.g., executives) that requires a specific, multi-stage argument (e.g., technology adoption).</li><li><strong>lesson</strong>: The system&#x27;s long-term memory and system prompt must enforce a rigid, multi-stage narrative structure (Problem → Solution → Value → CTA) and simultaneously inject domain-specific constraints (e.g., &quot;must use ROI language,&quot; &quot;must avoid jargon&quot;) to ensure the content is both structurally sound and contextually relevant to the audience&#x27;s priorities.</li><li><strong>evidence</strong>: The combination of the structural mandates from <code>inv2</code> (enforcing the mandatory narrative arc in <code>systemprompt.md</code>) and the domain-specific content guidance from <code>dom2</code> (defining the required narrative arc and vocabulary in <code>LongTermMEMORY.md</code>). This combination resulted in the <code>agg1</code> rollout, which demonstrated a perfect blend of structural rigor and executive-level business focus.</li><li><strong>confidence</strong>: high, because the successful output (agg1) is a direct and visible result of combining these two distinct types of constraints (structural enforcement and domain knowledge injection).</li></ul><h5>What changed in the adopted harness</h5><details><summary><code>LongTermMEMORY.md</code></summary><pre class='diff'><span class='hunk'>@@ -0,0 +1,19 @@</span>
+<span class='add'>+# Domain Knowledge: Executive Presentation Design for Technology Adoption</span>
+<span class='add'>+</span>
+<span class='add'>+**Goal:** To build a persuasive, actionable presentation for non-technical executives. The deck must convince the audience that adopting RAG is a strategic necessity, not just a technical upgrade.</span>
+<span class='add'>+</span>
+<span class='add'>+**Required Structure (The Narrative Arc):**</span>
+<span class='add'>+A successful pitch must follow this mandatory narrative arc:</span>
+<span class='add'>+1. **Title/Hook:** State the core problem and the opportunity (e.g., &quot;Securing AI Reliability for Business Growth&quot;).</span>
+<span class='add'>+2. **Problem/Pain Point:** Clearly define the risk of current, general-purpose AI (Hallucinations, lack of proprietary context, compliance risk). *Focus on the cost of inaction.*</span>
+<span class='add'>+3. **Solution Introduction (RAG):** Introduce RAG as the mechanism that solves the pain point. Explain *what* it does (Retrieval + Augmentation) using simple analogies, not technical details.</span>
+<span class='add'>+4. **Value Proposition/Impact:** Detail the tangible business benefits (ROI, efficiency gains, reduced compliance risk, faster decision-making). *This is the most critical section.*</span>
+<span class='add'>+5. **Implementation Roadmap:** Present a phased, manageable plan (Pilot $\rightarrow$ Scale $\rightarrow$ Govern). This minimizes perceived risk.</span>
+<span class='add'>+6. **Call to Action (CTA) / Summary:** Conclude with a clear, specific recommendation (e.g., &quot;Approve funding for a cross-functional steering committee&quot; or &quot;Start Phase 1 Pilot in Legal&quot;). The CTA must be the final, memorable takeaway.</span>
+<span class='add'>+</span>
+<span class='add'>+**Vocabulary Guidance:**</span>
+<span class='add'>+*   **Use:** Operational risk, ROI, Compliance, Strategic Investment, Proprietary Data, Governance, Time-to-answer, Scalability.</span>
+<span class='add'>+*   **Avoid:** Vector databases, embedding, chunking, cosine similarity, LLM architecture details.</span>
+<span class='add'>+</span>
+<span class='add'>+**Consistency Check:**</span>
+<span class='add'>+*   The final slide must explicitly contain a concrete, actionable next step or investment request.</span></pre></details><details><summary><code>guardrails.md</code></summary><pre class='diff'><span class='hunk'>@@ -2,10 +2,15 @@</span>
+<span class=''> 1. One idea per slide. The title should state the takeaway (an assertion), not just a topic.</span>
+<span class=''> 2. Follow the 6x6 guideline: at most 6 bullets per slide and about 6-10 words per bullet.</span>
+<span class=''> 3. Keep titles short (no more than ~8 words).</span>
+<span class='del'>-4. Structure: title slide -&gt; agenda -&gt; content sections -&gt; summary/key takeaways -&gt; Q&amp;A or next steps.</span>
+<span class='del'>-5. Tell a story: problem -&gt; why it matters -&gt; solution/insight -&gt; evidence -&gt; call to action.</span>
+<span class='add'>+4. Structure: The deck must follow a mandatory sequence: Title Slide $\rightarrow$ Agenda Slide (listing main sections) $\rightarrow$ Content Sections (the core narrative) $\rightarrow$ Summary/Key Takeaways Slide $\rightarrow$ Call to Action/Next Steps Slide.</span>
+<span class='add'>+5. Tell a story: problem $\rightarrow$ why it matters $\rightarrow$ solution/insight $\rightarrow$ evidence $\rightarrow$ call to action.</span>
+<span class=''> 6. Put details in the speaker notes, not on the slide.</span>
+<span class=''> 7. Use parallel grammar in bullets and avoid full sentences or paragraphs.</span>
+<span class=''> 8. Aim for about 1 slide per 1-2 minutes of talk time; most decks have 8-15 slides.</span>
+<span class=''> 9. Tailor vocabulary and depth to the stated audience.</span>
+<span class=''> 10. End with a clear takeaway or call to action.</span>
+<span class='add'>+</span>
+<span class='add'>+**Executive Pitch Focus (Non-Technical Audience):**</span>
+<span class='add'>+*   **Focus on Business Impact:** Every slide must connect the technology (RAG) back to a measurable business outcome (e.g., ROI, risk reduction, time savings, compliance).</span>
+<span class='add'>+*   **Avoid Technical Jargon:** When describing concepts, use analogies and business metaphors (e.g., &quot;RAG is like giving the AI a locked-down library of our company&#x27;s best manuals,&quot; instead of detailing vector databases).</span>
+<span class='add'>+*   **Narrative Flow:** The presentation must build a compelling case: *Problem* (Current AI is risky) $\rightarrow$ *Solution* (RAG is the fix) $\rightarrow$ *Value* (It saves money/reduces risk) $\rightarrow$ *Action* (We must invest now).</span></pre></details><details><summary><code>systemprompt.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,3 +1,5 @@</span>
+<span class=''> You are a presentation designer agent. You build slide decks by calling tools.</span>
+<span class=''> </span>
+<span class=''> Workflow: (if there is a source) read_source -&gt; plan_outline -&gt; add_slide for each slide -&gt; critique_deck -&gt; fix issues -&gt; save_deck -&gt; finish.</span>
+<span class='add'>+</span>
+<span class='add'>+When calling `add_slide` or `edit_slide`, ensure the slide sequence follows the mandatory narrative arc: Introduction (Title) $\rightarrow$ Problem/Risk $\rightarrow$ Solution/Mechanism $\rightarrow$ Business Value/ROI $\rightarrow$ Implementation Roadmap $\rightarrow$ Conclusion/Call to Action.</span></pre></details><details><summary><code>tool_descriptions/tool_guidance.md</code></summary><pre class='diff'><span class='hunk'>@@ -2,3 +2,4 @@</span>
+<span class=''> - Call plan_outline once before adding slides.</span>
+<span class=''> - Use layout &quot;title&quot; for the first slide; put the subtitle in bullets[0].</span>
+<span class=''> - Call critique_deck before save_deck and fix every issue it reports.</span>
+<span class='add'>+- **Note on `edit_slide`:** When using `edit_slide`, only provide `index`, `title`, `bullets`, and `notes`. Do not include the `layout` keyword argument, as it is not supported.</span></pre></details></div><div class='card'><h4>gemma4 (local) · <code>remote-work-findings</code></h4><ul class='lesson'><li><strong>cue</strong>: When generating persuasive, policy-driven content for a senior leadership audience, especially when translating raw data (survey results, metrics) into mandatory structural or policy changes.</li><li><strong>lesson</strong>: When defining the agent&#x27;s structural constraints, always enforce a mandatory, multi-stage narrative arc (e.g., Problem → Evidence → Implication → Solution → CTA) in both the <code>guardrails.md</code> and the <code>systemprompt.md</code>. Furthermore, augment the <code>LongTermMEMORY.md</code> with domain-specific knowledge that explicitly teaches the agent to synthesize data into a &quot;So what?&quot; moment (Implication/Synthesis) and frame the findings in terms of measurable business risk (e.g., &quot;retention risk,&quot; &quot;operational efficiency&quot;).</li><li><strong>evidence</strong>: The successful candidates (agg1, dom1, dom2, inv2) all implemented the mandatory Policy Arc structure in <code>guardrails.md</code> and <code>systemprompt.md</code>, and integrated the synthesis requirement in <code>LongTermMEMORY.md</code>. This combination forced the agent to move beyond simple data reporting (seen in base1/base2) to generating high-stakes, actionable policy mandates, as demonstrated by the consistent 6-slide structure and the mandatory Implication slide across the successful deliverables.</li><li><strong>confidence</strong>: high, because the combination of structural constraints (guardrails/systemprompt) and domain knowledge (LongTermMEMORY) was required to achieve the single most critical feature of the output: the mandatory, persuasive policy mandate.</li></ul><h5>What changed in the adopted harness</h5><details><summary><code>LongTermMEMORY.md</code></summary><pre class='diff'><span class='hunk'>@@ -0,0 +1,20 @@</span>
+<span class='add'>+# Domain Knowledge: Strategic Presentation Design for HR Leadership</span>
+<span class='add'>+</span>
+<span class='add'>+**Goal:** To build a highly persuasive, actionable presentation for HR leadership that translates raw survey data into mandatory structural and policy changes. The deck must convince the audience that adopting specific policies is a strategic necessity, not just a suggestion.</span>
+<span class='add'>+</span>
+<span class='add'>+**Required Structure (The Strategic Narrative Arc):**</span>
+<span class='add'>+A successful presentation must follow this mandatory, persuasive arc:</span>
+<span class='add'>+1. **Title/Hook:** State the core topic and the high-level goal (e.g., &quot;Designing a Sustainable Future of Work&quot;).</span>
+<span class='add'>+2. **Problem/Risk:** Define the status quo&#x27;s risk (e.g., high isolation, retention risk, inefficient meetings). *Focus on the cost of inaction.*</span>
+<span class='add'>+3. **Key Insights (Evidence):** Present the most impactful data points from the source material that support the risk (e.g., &quot;41% feel disconnected&quot;).</span>
+<span class='add'>+4. **Implication/Synthesis:** Explain *what the data means* for the business/HR strategy. This is the bridge between data and action. (e.g., &quot;This isolation risk threatens long-term retention.&quot;)</span>
+<span class='add'>+5. **Recommendations/Solution:** Propose specific, actionable policy changes derived directly from the data.</span>
+<span class='add'>+6. **Call to Action (CTA) / Next Steps:** Conclude with a clear, concrete request (e.g., &quot;Approve funding for a cross-functional task force&quot; or &quot;Pilot structured onboarding in Q3&quot;). The CTA must be the final, memorable takeaway.</span>
+<span class='add'>+</span>
+<span class='add'>+**Vocabulary Guidance:**</span>
+<span class='add'>+*   **Use:** Retention risk, Employee Experience (EX), Structural change, Policy framework, Operational efficiency, Strategic investment, Workforce design, Engagement, Wellbeing.</span>
+<span class='add'>+*   **Avoid:** Overly technical jargon, vague statements, or simply restating raw percentages without linking them to a business outcome.</span>
+<span class='add'>+</span>
+<span class='add'>+**Consistency Check:**</span>
+<span class='add'>+*   The presentation must move beyond simply reporting data; every section must build toward a clear, actionable policy recommendation.</span>
+<span class='add'>+*   The final slide must contain a concrete, measurable next step or investment request.</span></pre></details><details><summary><code>guardrails.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,11 +1,11 @@</span>
+<span class=''> Best practices to follow:</span>
+<span class='del'>-1. One idea per slide. The title should state the takeaway (an assertion), not just a topic.</span>
+<span class='add'>+1. One idea per slide. The title must state the takeaway (an assertion), not just a topic.</span>
+<span class=''> 2. Follow the 6x6 guideline: at most 6 bullets per slide and about 6-10 words per bullet.</span>
+<span class=''> 3. Keep titles short (no more than ~8 words).</span>
+<span class='del'>-4. Structure: title slide -&gt; agenda -&gt; content sections -&gt; summary/key takeaways -&gt; Q&amp;A or next steps.</span>
+<span class='del'>-5. Tell a story: problem -&gt; why it matters -&gt; solution/insight -&gt; evidence -&gt; call to action.</span>
+<span class='add'>+4. Structure: The deck must follow a strategic narrative arc: Title $\rightarrow$ Problem/Risk $\rightarrow$ Key Insight $\rightarrow$ Evidence $\rightarrow$ Recommendations $\rightarrow$ Call to Action/Next Steps.</span>
+<span class='add'>+5. Tell a story: Start by defining the problem (the current state&#x27;s risk) $\rightarrow$ Present supporting evidence $\rightarrow$ Explain the implication (why it matters to HR) $\rightarrow$ Propose a clear, actionable solution.</span>
+<span class=''> 6. Put details in the speaker notes, not on the slide.</span>
+<span class=''> 7. Use parallel grammar in bullets and avoid full sentences or paragraphs.</span>
+<span class='del'>-8. Aim for about 1 slide per 1-2 minutes of talk time; most decks have 8-15 slides.</span>
+<span class='del'>-9. Tailor vocabulary and depth to the stated audience.</span>
+<span class='del'>-10. End with a clear takeaway or call to action.</span>
+<span class='add'>+8. Aim for conciseness; aim for 6-8 slides for a high-level leadership audience.</span>
+<span class='add'>+9. Tailor vocabulary and depth to the stated audience (HR leadership).</span>
+<span class='add'>+10. End with a clear, specific takeaway or call to action.</span></pre></details><details><summary><code>systemprompt.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,3 +1,5 @@</span>
+<span class=''> You are a presentation designer agent. You build slide decks by calling tools.</span>
+<span class=''> </span>
+<span class=''> Workflow: (if there is a source) read_source -&gt; plan_outline -&gt; add_slide for each slide -&gt; critique_deck -&gt; fix issues -&gt; save_deck -&gt; finish.</span>
+<span class='add'>+</span>
+<span class='add'>+When calling `add_slide` or `edit_slide`, ensure the slide sequence follows the strategic narrative arc: Introduction (Title) $\rightarrow$ Problem/Risk $\rightarrow$ Key Insight (Evidence) $\rightarrow$ Implication/Synthesis $\rightarrow$ Recommendations $\rightarrow$ Conclusion/Call to Action.</span></pre></details></div><div class='card'><h4>gpt-6-luna (OpenAI) · <code>rag-for-execs</code></h4><p class='muted'><strong>No lesson recorded: the improver declined (<code>NO_ENTRY</code>).</strong> Harness² tells it to decline when every edit's evidence is <em>confounded</em> (each candidate changed several files, so no single contrast isolates an edit). This task's library stayed empty, so nothing carried over to the next task.</p><h5>What changed in the adopted harness</h5><details><summary><code>guardrails.md</code></summary><pre class='diff'><span class='hunk'>@@ -2,10 +2,11 @@</span>
+<span class=''> 1. One idea per slide. The title should state the takeaway (an assertion), not just a topic.</span>
+<span class=''> 2. Follow the 6x6 guideline: at most 6 bullets per slide and about 6-10 words per bullet.</span>
+<span class=''> 3. Keep titles short (no more than ~8 words).</span>
+<span class='del'>-4. Structure: title slide -&gt; agenda -&gt; content sections -&gt; summary/key takeaways -&gt; Q&amp;A or next steps.</span>
+<span class='add'>+4. Treat the requested slide count as the total, including title and closing slides. For a ~6-slide request, target six; combine the opening, roadmap, summary, or next step rather than adding standalone slides.</span>
+<span class=''> 5. Tell a story: problem -&gt; why it matters -&gt; solution/insight -&gt; evidence -&gt; call to action.</span>
+<span class=''> 6. Put details in the speaker notes, not on the slide.</span>
+<span class=''> 7. Use parallel grammar in bullets and avoid full sentences or paragraphs.</span>
+<span class='del'>-8. Aim for about 1 slide per 1-2 minutes of talk time; most decks have 8-15 slides.</span>
+<span class='add'>+8. Use talk duration as a secondary guide when the requested count allows.</span>
+<span class=''> 9. Tailor vocabulary and depth to the stated audience.</span>
+<span class='del'>-10. End with a clear takeaway or call to action.</span>
+<span class='add'>+10. Distinguish evidence from assumptions; do not invent company-specific facts, ROI, sources, or metrics.</span>
+<span class='add'>+11. End with a clear takeaway or call to action.</span></pre></details><details><summary><code>systemprompt.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,3 +1,3 @@</span>
+<span class='del'>-You are a presentation designer agent. You build slide decks by calling tools.</span>
+<span class='add'>+You are a presentation designer agent. Build slide decks with tools.</span>
+<span class=''> </span>
+<span class='del'>-Workflow: (if there is a source) read_source -&gt; plan_outline -&gt; add_slide for each slide -&gt; critique_deck -&gt; fix issues -&gt; save_deck -&gt; finish.</span>
+<span class='add'>+Workflow: If a source is supplied, read it. Call plan_outline once, counting the title and closing slides within the requested total. Add one slide per planned item. Call critique_deck and resolve valid issues by editing planned slides while preserving the count. Save the deck, inspect the saved file when an inspection tool is available, then finish. Diagnose tool errors and correct bad input once; do not repeat an unchanged failing call.</span></pre></details><details><summary><code>tool_descriptions/tool_guidance.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,4 +1,6 @@</span>
+<span class=''> Tool guidance:</span>
+<span class='del'>-- Call plan_outline once before adding slides.</span>
+<span class='del'>-- Use layout &quot;title&quot; for the first slide; put the subtitle in bullets[0].</span>
+<span class='del'>-- Call critique_deck before save_deck and fix every issue it reports.</span>
+<span class='add'>+- Call plan_outline once before adding slides. Include the title and closing within the requested total; use the outline as the complete plan.</span>
+<span class='add'>+- Use layout &quot;title&quot; for the first add_slide; put the subtitle in bullets[0].</span>
+<span class='add'>+- Call critique_deck before saving. Check each reported issue against the deck and fix genuine issues in existing planned slides where possible. Do not append a redundant slide or exceed the requested count.</span>
+<span class='add'>+- edit_slide does not accept a layout argument. If an error identifies layout as an unexpected argument, omit it from the corrected call while preserving other intended fields. Do not repeat an unchanged failing call; if the correction fails, consult the tool schema rather than guessing.</span>
+<span class='add'>+- After saving, inspect the saved deck with an available read-back tool, consulting its schema rather than guessing the tool name or arguments. Confirm slide count, order, and readable content. If inspection is unavailable or fails, do not claim verification or loop on failing calls; finish with the saved deck and an accurate status.</span></pre></details></div><div class='card'><h4>gpt-6-luna (OpenAI) · <code>remote-work-findings</code></h4><p class='muted'><strong>No lesson recorded: the improver declined (<code>NO_ENTRY</code>).</strong> Harness² tells it to decline when every edit's evidence is <em>confounded</em> (each candidate changed several files, so no single contrast isolates an edit). This task's library stayed empty, so nothing carried over to the next task.</p><h5>What changed in the adopted harness</h5><details><summary><code>guardrails.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,11 +1,11 @@</span>
+<span class=''> Best practices to follow:</span>
+<span class='del'>-1. One idea per slide. The title should state the takeaway (an assertion), not just a topic.</span>
+<span class='add'>+1. One idea per slide. Use an assertion-style title that states the takeaway.</span>
+<span class=''> 2. Follow the 6x6 guideline: at most 6 bullets per slide and about 6-10 words per bullet.</span>
+<span class='del'>-3. Keep titles short (no more than ~8 words).</span>
+<span class='del'>-4. Structure: title slide -&gt; agenda -&gt; content sections -&gt; summary/key takeaways -&gt; Q&amp;A or next steps.</span>
+<span class='add'>+3. Keep titles short (no more than about 8 words).</span>
+<span class='add'>+4. Fit the opening, evidence, and closing within the requested slide count. Use an agenda or Q&amp;A slide only when the request and available space support it.</span>
+<span class=''> 5. Tell a story: problem -&gt; why it matters -&gt; solution/insight -&gt; evidence -&gt; call to action.</span>
+<span class=''> 6. Put details in the speaker notes, not on the slide.</span>
+<span class=''> 7. Use parallel grammar in bullets and avoid full sentences or paragraphs.</span>
+<span class='del'>-8. Aim for about 1 slide per 1-2 minutes of talk time; most decks have 8-15 slides.</span>
+<span class='add'>+8. Treat “about” or “~” slide counts as constraints; do not add routine slides beyond them.</span>
+<span class=''> 9. Tailor vocabulary and depth to the stated audience.</span>
+<span class='del'>-10. End with a clear takeaway or call to action.</span>
+<span class='add'>+10. End with a clear takeaway or call to action, which may share the final content slide.</span></pre></details><details><summary><code>skills/hr_survey_deck/SKILL.md</code></summary><pre class='diff'><span class='hunk'>@@ -0,0 +1,19 @@</span>
+<span class='add'>+---</span>
+<span class='add'>+name: hr_survey_deck</span>
+<span class='add'>+description: Build an evidence-grounded employee survey deck for HR leadership.</span>
+<span class='add'>+---</span>
+<span class='add'>+</span>
+<span class='add'>+# HR survey findings deck</span>
+<span class='add'>+</span>
+<span class='add'>+## Plan the story</span>
+<span class='add'>+Use the requested topic, audience, slide count, and authorized source material. Shape the story around the most decision-relevant findings and their implications for HR. Include the title and a closing takeaway or next steps within the requested count. Do not add a routine agenda, summary, or Q&amp;A slide if it displaces requested content or exceeds the count; a closing takeaway can share the final content slide.</span>
+<span class='add'>+</span>
+<span class='add'>+## Preserve what the source says</span>
+<span class='add'>+- Keep reported findings, interpretations, survey-team recommendations, and proposed HR decisions distinct. Attribute recommendations to the survey team when that is their source.</span>
+<span class='add'>+- Do not turn a survey finding into a causal claim, an approved policy, or a stronger recommendation than the source supports. Do not invent pilots, deadlines, mandates, or other actions.</span>
+<span class='add'>+- Keep each statistic attached to its stated population, comparison, timeframe, and units. Preserve qualifiers such as “likely,” and do not generalize a subgroup result to all employees.</span>
+<span class='add'>+- Preserve the source’s stated reason for a preference or outcome; do not recast it as the reason for a different outcome.</span>
+<span class='add'>+- Select the findings needed for the story, including relevant retention implications; do not imply that omitted findings support a claim.</span>
+<span class='add'>+</span>
+<span class='add'>+## Build and check the slides</span>
+<span class='add'>+Give each slide one main idea and an assertion-style title. Keep bullets concise and parallel; put qualifications, definitions, and supporting detail in speaker notes. Before finishing, check every displayed figure and recommendation against the source, and remove claims or action details the source does not support.</span></pre></details><details><summary><code>systemprompt.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,3 +1,5 @@</span>
+<span class='del'>-You are a presentation designer agent. You build slide decks by calling tools.</span>
+<span class='add'>+You are a presentation designer agent. Build slide decks by calling tools.</span>
+<span class=''> </span>
+<span class='del'>-Workflow: (if there is a source) read_source -&gt; plan_outline -&gt; add_slide for each slide -&gt; critique_deck -&gt; fix issues -&gt; save_deck -&gt; finish.</span>
+<span class='add'>+Workflow: read the source; call plan_outline once with the requested slide count in mind, including a closing takeaway or next steps; add the planned slides; call critique_deck and fix its issues; save the deck; inspect the saved deck if an inspection tool is available; then finish.</span>
+<span class='add'>+</span>
+<span class='add'>+When creating a deck from employee survey findings for HR leadership, load the `hr_survey_deck` skill.</span></pre></details><details><summary><code>tool_descriptions/tool_guidance.md</code></summary><pre class='diff'><span class='hunk'>@@ -1,4 +1,6 @@</span>
+<span class=''> Tool guidance:</span>
+<span class='del'>-- Call plan_outline once before adding slides.</span>
+<span class='add'>+- Call plan_outline once before adding slides. Keep its title count within the requested slide count, including the title and closing slide; make the final planned slide a takeaway or next steps.</span>
+<span class=''> - Use layout &quot;title&quot; for the first slide; put the subtitle in bullets[0].</span>
+<span class='del'>-- Call critique_deck before save_deck and fix every issue it reports.</span>
+<span class='add'>+- Call critique_deck before save_deck and fix every issue it reports. Prefer revising a planned slide over adding a slide when that keeps the deck within the requested count; re-critique after fixes.</span>
+<span class='add'>+- After saving, inspect the saved deck with an available deck-reading or preview tool. Check that it opens and matches the planned slide count, order, and content. If no inspection tool is available, do not claim to have reopened it.</span>
+<span class='add'>+- If edit_slide rejects an optional layout argument, retry the edit without that argument.</span></pre></details></div>
+
+<h3>The judge decides the conclusion</h3>
+<p>On the first run (k=1, <code>rag-for-execs</code>), the same 4 decks were scored by three judges using the same rubric:</p>
+<div class="scroll"><table>
+<tr><th>Rollout</th><th class="num">gemma4 (self-grading)</th><th class="num">gpt-oss:20b</th><th class="num">GPT-6 Astra</th></tr>
+<tr><td><code>base1</code></td><td class='num'>25</td><td class='num'>20</td><td class='num'>14</td></tr><tr><td><code>inv1</code></td><td class='num'>25</td><td class='num'>21</td><td class='num'>13</td></tr><tr><td><code>dom1</code></td><td class='num'>25</td><td class='num'>23</td><td class='num'>13</td></tr><tr><td><code>agg1</code></td><td class='num'>25</td><td class='num'>22</td><td class='num'>12</td></tr>
+</table></div>
+<p class="muted">Gemma rated every criterion 5/5. gpt-oss ranked the decks almost in reverse of GPT-6 Astra, so with gpt-oss
+Harness² "helped" and with Astra it did not. GPT-6 Astra is the judge of record because its reasons cite specific, verifiable slide-level errors.</p>
+
+<h2>5. Engineering log</h2>
+<h3>Decisions</h3>
+<ul>
+<li><strong>Local executor, API judge, configurable improver.</strong> Gemma writes every deck for free on the local GPU. The judge is an API model from
+a different family than the executor. The improver can be local or an API model; with <code>gpt-6-luna</code> it costs fractions of a cent per call.</li>
+<li><strong>JSON tool protocol instead of native tool calling,</strong> because Gemma's native support in Ollama is uneven, and the protocol keeps the agent provider-agnostic.</li>
+<li><strong>Custom benchmark instead of the built-in ones.</strong> LAB, JobBench and WorkBuddy test coding agents on legal, professional and office work. Our agent needed its own adapter, modelled on the repo's <code>demo.py</code>.</li>
+<li><strong>Points instead of pass/fail.</strong> A 4/5 pass mark made every deck score 8/13 once the judge became strict, which hid all differences.</li>
+<li><strong>A shared, reused baseline.</strong> The base mean averages all base rollouts, and every improver is compared against the same base decks and scores.</li>
+</ul>
+<h3>Making Harness² run on Windows</h3>
+<p>Harness² targets Linux. The core needed three small patches (in <code>vendor_harness2/</code>):</p>
+<ol>
+<li><code>core/schedule.py</code>: <code>fcntl</code> (POSIX file locking) falls back to <code>msvcrt</code>.</li>
+<li><code>core/tree.py</code>, <code>core/runmark.py</code>, <code>core/proposer.py</code>: relative paths use <code>as_posix()</code>. Windows backslashes had made the improver's edits invisible to the probes.</li>
+<li><code>core/context.py</code>: evidence folders are deleted with a handler that clears read-only flags and retries. OneDrive marks synced folders read-only, and Windows refuses to delete a read-only directory, which made every stage silently fall back to the base harness.</li>
+</ol>
+<h3>Bugs found and fixed in our own code</h3>
+<ul>
+<li>The selector wrote <code>context/candidates/A.md</code> instead of the bare ID <code>A</code>, and sometimes left out the <code>&lt;why&gt;</code> tags. Replies are now normalized, and the prompt shows the format.</li>
+<li>Improver workspaces and audit files were keyed by label only, so labels like <code>inv1.a1</code> collided across tasks. They are now keyed by mode and task.</li>
+<li>Without a reply cache, a resumed run would draw new edits while reusing rollouts from the old ones. The proposer now caches under upstream's <code>_call_fingerprint</code>, plus the model name.</li>
+<li>Gemma's 60k-character evidence budget silently left 4–12 files out of every composition prompt and 54 files out of a lesson-writing prompt. API improvers now see the full folder.</li>
+<li>A blank <code>OPENAI_BASE_URL=</code> in <code>.env</code> became an empty API address. The loader now skips blank values.</li>
+<li>Runs now live outside OneDrive (for example <code>~/harness2_runs/</code>). Thousands of scratch files shouldn't sync, and synced folders turn read-only.</li>
+</ul>
+
+<h2>6. Reproduce</h2>
+<pre>python -m venv .venv
+.venv\Scripts\pip install -e "./vendor_harness2[render]" ollama pypdf openai
+copy .env.example .env      # add OPENAI_API_KEY; JUDGE_MODEL pins the judge
+.venv\Scripts\python -m h2.run --output ~/harness2_runs/slides_k2b --k 2 --mode parallel --domain business
+.venv\Scripts\python -m h2.run --output ~/harness2_runs/slides_k2_luna --k 2 --mode parallel --domain business ^
+    --improver-provider openai --improver-model gpt-6-luna     # seed with the first run's base rollouts first
+.venv\Scripts\python -m h2.rescore --output ~/harness2_runs/slides_k2_luna --out rescore_openai.json ^
+    --reuse-run ~/harness2_runs/slides_k2b
+.venv\Scripts\python -m h2.report_html --run "gemma4 (local)=~/harness2_runs/slides_k2b" ^
+    --run "gpt-6-luna (OpenAI)=~/harness2_runs/slides_k2_luna"</pre>
+</main>
+<div class="tip" id="tip" role="tooltip"></div>
+</div>
+
+<script>
+const DATA = {"points": [{"task": "rag-for-execs", "group": "Base harness", "label": "base1", "kind": "base", "rubric": 13, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "Base harness", "label": "base2", "kind": "base", "rubric": 14, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "remote-work-findings", "group": "Base harness", "label": "base1", "kind": "base", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "Base harness", "label": "base2", "kind": "base", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "rag-for-execs", "group": "gemma4 (local)", "label": "agg1", "kind": "agg", "rubric": 14, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": true}, {"task": "rag-for-execs", "group": "gemma4 (local)", "label": "agg2", "kind": "agg", "rubric": 13, "rules": 8, "ratings": {"story": 3, "assertion_titles": 2, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gemma4 (local)", "label": "dom1", "kind": "dom", "rubric": 13, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 2}, "chosen": false}, {"task": "rag-for-execs", "group": "gemma4 (local)", "label": "dom2", "kind": "dom", "rubric": 14, "rules": 7, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gemma4 (local)", "label": "inv1", "kind": "inv", "rubric": 14, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gemma4 (local)", "label": "inv2", "kind": "inv", "rubric": 13, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 3}, "chosen": false}, {"task": "remote-work-findings", "group": "gemma4 (local)", "label": "agg1", "kind": "agg", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": true}, {"task": "remote-work-findings", "group": "gemma4 (local)", "label": "agg2", "kind": "agg", "rubric": 11, "rules": 8, "ratings": {"story": 3, "assertion_titles": 2, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "gemma4 (local)", "label": "dom1", "kind": "dom", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "gemma4 (local)", "label": "dom2", "kind": "dom", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "gemma4 (local)", "label": "inv1", "kind": "inv", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "gemma4 (local)", "label": "inv2", "kind": "inv", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "rag-for-execs", "group": "gpt-6-luna (OpenAI)", "label": "agg1", "kind": "agg", "rubric": 14, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": true}, {"task": "rag-for-execs", "group": "gpt-6-luna (OpenAI)", "label": "agg2", "kind": "agg", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 1, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gpt-6-luna (OpenAI)", "label": "dom1", "kind": "dom", "rubric": 14, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gpt-6-luna (OpenAI)", "label": "dom2", "kind": "dom", "rubric": 16, "rules": 7, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 4, "accuracy": 3, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gpt-6-luna (OpenAI)", "label": "inv1", "kind": "inv", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 2, "audience_fit": 3, "accuracy": 1, "notes_quality": 3}, "chosen": false}, {"task": "rag-for-execs", "group": "gpt-6-luna (OpenAI)", "label": "inv2", "kind": "inv", "rubric": 13, "rules": 7, "ratings": {"story": 3, "assertion_titles": 2, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": false}, {"task": "remote-work-findings", "group": "gpt-6-luna (OpenAI)", "label": "agg1", "kind": "agg", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "gpt-6-luna (OpenAI)", "label": "agg2", "kind": "agg", "rubric": 14, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 2, "notes_quality": 3}, "chosen": true}, {"task": "remote-work-findings", "group": "gpt-6-luna (OpenAI)", "label": "dom1", "kind": "dom", "rubric": 12, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}, {"task": "remote-work-findings", "group": "gpt-6-luna (OpenAI)", "label": "dom2", "kind": "dom", "rubric": 13, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 3}, "chosen": false}, {"task": "remote-work-findings", "group": "gpt-6-luna (OpenAI)", "label": "inv1", "kind": "inv", "rubric": 13, "rules": 8, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 3}, "chosen": false}, {"task": "remote-work-findings", "group": "gpt-6-luna (OpenAI)", "label": "inv2", "kind": "inv", "rubric": 12, "rules": 6, "ratings": {"story": 3, "assertion_titles": 3, "audience_fit": 3, "accuracy": 1, "notes_quality": 2}, "chosen": false}], "groups": ["gemma4 (local)", "gpt-6-luna (OpenAI)"], "series": [{"name": "Base harness", "n": 4, "values": {"story": 3.0, "assertion_titles": 3.0, "audience_fit": 3.0, "accuracy": 1.25, "notes_quality": 2.5}}, {"name": "Improved by gemma4 (local)", "n": 12, "values": {"story": 3.0, "assertion_titles": 2.8333333333333335, "audience_fit": 3.0, "accuracy": 1.4166666666666667, "notes_quality": 2.4166666666666665}}, {"name": "Improved by gpt-6-luna (OpenAI)", "n": 12, "values": {"story": 3.0, "assertion_titles": 2.6666666666666665, "audience_fit": 3.0833333333333335, "accuracy": 1.5833333333333333, "notes_quality": 2.75}}], "base_means": {"rag-for-execs": 13.5, "remote-work-findings": 12.0}, "tasks": ["rag-for-execs", "remote-work-findings"]};
+const KIND_NAME = {base: "Base harness", inv: "General edit", dom: "Domain edit", agg: "Composition"};
+const CRIT_NAME = {story: "Story arc", assertion_titles: "Assertion titles", audience_fit: "Audience fit", accuracy: "Accuracy", notes_quality: "Speaker notes"};
+const SERIES_VAR = ["var(--series-1)", "var(--series-2)", "var(--series-3)"];
+const NS = "http://www.w3.org/2000/svg";
+const tip = document.getElementById("tip");
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function txt(parent, x, y, s, attrs) {
+  const t = el("text", Object.assign({x, y}, attrs || {}), parent); t.textContent = s; return t;
+}
+function showTip(ev, rows) {
+  tip.replaceChildren();
+  rows.forEach(([v, k], i) => {
+    const d = document.createElement("div");
+    const s = document.createElement(i === 0 ? "strong" : "span"); s.textContent = v; d.appendChild(s);
+    if (k) { const kk = document.createElement("span"); kk.className = "k"; kk.textContent = "  " + k; d.appendChild(kk); }
+    tip.appendChild(d);
+  });
+  const r = ev.target.getBoundingClientRect();
+  const x = (ev.clientX || r.left + r.width / 2) + 14, y = (ev.clientY || r.top) + 14;
+  tip.style.left = Math.min(x, window.innerWidth - 280) + "px"; tip.style.top = y + "px"; tip.style.opacity = 1;
+}
+function hideTip() { tip.style.opacity = 0; }
+function bindTip(target, mark, rows) {
+  target.setAttribute("tabindex", "0");
+  target.setAttribute("aria-label", rows.map(r => r.join(" ")).join(", "));
+  const on = ev => { mark.setAttribute("stroke-width", 3); showTip(ev, rows); };
+  const off = () => { mark.setAttribute("stroke-width", 2); hideTip(); };
+  target.addEventListener("pointermove", on); target.addEventListener("pointerleave", off);
+  target.addEventListener("focus", on); target.addEventListener("blur", off);
+}
+
+function stripChart() {
+  const host = document.getElementById("strip");
+  const rowsSpec = [{group: "Base harness", kind: "base", name: "Base harness (shared)"}];
+  DATA.groups.forEach(g => ["inv", "dom", "agg"].forEach(k => rowsSpec.push({group: g, kind: k, name: `${g} · ${KIND_NAME[k]}`})));
+  const W = 900, rowH = 30, top = 30, left = 230, right = 30, bottom = 34;
+  const vals = DATA.points.map(p => p.rubric);
+  const lo = Math.max(0, Math.min(...vals) - 1), hi = Math.min(25, Math.max(...vals) + 1);
+  const X = v => left + (v - lo) / (hi - lo) * (W - left - right);
+  DATA.tasks.forEach(task => {
+    const H = top + rowH * rowsSpec.length + bottom;
+    const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img",
+      "aria-label": `Rubric points per deck for ${task}`}, host);
+    txt(svg, 0, 16, task, {fill: "var(--text-primary)", "font-size": 14, "font-weight": 600});
+    for (let v = Math.ceil(lo); v <= hi; v++) {
+      el("line", {x1: X(v), x2: X(v), y1: top, y2: top + rowH * rowsSpec.length, stroke: "var(--grid)", "stroke-width": 1}, svg);
+      txt(svg, X(v), H - 12, v, {fill: "var(--muted)", "font-size": 12, "text-anchor": "middle"});
+    }
+    txt(svg, left - 12, H - 12, "points / 25", {fill: "var(--muted)", "font-size": 12, "text-anchor": "end"});
+    rowsSpec.forEach((r, i) => {
+      const y = top + rowH * i + rowH / 2;
+      if (i === 1 || (i > 1 && rowsSpec[i - 1].group !== r.group))
+        el("line", {x1: 0, x2: W - right, y1: y - rowH / 2, y2: y - rowH / 2, stroke: "var(--axis)", "stroke-width": 1}, svg);
+      txt(svg, 0, y + 4, r.name, {fill: "var(--text-secondary)", "font-size": 12.5});
+    });
+    const bm = DATA.base_means[task];
+    el("line", {x1: X(bm), x2: X(bm), y1: top - 6, y2: top + rowH * rowsSpec.length, stroke: "var(--text-secondary)", "stroke-width": 1.5}, svg);
+    txt(svg, X(bm) + 6, top - 8, `base mean ${bm.toFixed(1)}`, {fill: "var(--text-secondary)", "font-size": 12});
+    rowsSpec.forEach((r, i) => {
+      const pts = DATA.points.filter(p => p.task === task && p.group === r.group && p.kind === r.kind)
+        .sort((a, b) => a.label.localeCompare(b.label));
+      pts.forEach(p => {
+        const same = pts.filter(q => q.rubric === p.rubric);
+        const off = same.length > 1 ? (same.indexOf(p) - (same.length - 1) / 2) * 10 : 0;
+        const cx = X(p.rubric), cy = top + rowH * i + rowH / 2 + off;
+        const g = el("g", {}, svg);
+        el("circle", {cx, cy, r: 12, fill: "transparent"}, g);
+        const dot = el("circle", {cx, cy, r: p.chosen ? 7 : 5, fill: "var(--series-1)", stroke: "var(--surface-1)", "stroke-width": 2}, g);
+        if (p.chosen) txt(svg, cx + 11, cy + 4, `adopted (${p.label})`, {fill: "var(--text-primary)", "font-size": 12, "font-weight": 600});
+        bindTip(g, dot, [[`${p.rubric} / 25`, `${p.group} · ${p.label}${p.chosen ? " · adopted" : ""}`], [`rules ${p.rules}/8`, ""]]
+          .concat(Object.entries(p.ratings).map(([c, v]) => [String(v), CRIT_NAME[c]])));
+      });
+    });
+  });
+}
+
+function critChart() {
+  const host = document.getElementById("crit"), legend = document.getElementById("crit-legend");
+  DATA.series.forEach((s, i) => {
+    const span = document.createElement("span"); const sw = document.createElement("i");
+    sw.style.background = SERIES_VAR[i]; span.appendChild(sw);
+    span.appendChild(document.createTextNode(`${s.name} (${s.n} decks)`)); legend.appendChild(span);
+  });
+  const crits = Object.keys(CRIT_NAME);
+  const nS = DATA.series.length, barH = 14, gap = 2, groupGap = 16, left = 150, right = 60, top = 4;
+  const groupH = nS * barH + (nS - 1) * gap;
+  const W = 900, H = top + crits.length * (groupH + groupGap) + 22;
+  const X = v => left + v / 5 * (W - left - right);
+  const svg = el("svg", {viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img", "aria-label": "Mean rating per criterion by harness source"}, host);
+  for (let v = 0; v <= 5; v++) {
+    el("line", {x1: X(v), x2: X(v), y1: top, y2: H - 22, stroke: v === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1}, svg);
+    txt(svg, X(v), H - 6, v, {fill: "var(--muted)", "font-size": 12, "text-anchor": "middle"});
+  }
+  crits.forEach((c, ci) => {
+    const y0 = top + ci * (groupH + groupGap);
+    txt(svg, 0, y0 + groupH / 2 + 4, CRIT_NAME[c], {fill: "var(--text-secondary)", "font-size": 13});
+    DATA.series.forEach((s, si) => {
+      const v = s.values[c], y = y0 + si * (barH + gap), w = Math.max(X(v) - X(0), 5);
+      const g = el("g", {}, svg);
+      el("rect", {x: X(0), y: y - 1, width: w + 50, height: barH + 2, fill: "transparent"}, g);
+      const bar = el("path", {d: `M${X(0)},${y} h${w - 4} a4,4 0 0 1 4,4 v${barH - 8} a4,4 0 0 1 -4,4 h${-(w - 4)} z`,
+        fill: SERIES_VAR[si], stroke: "var(--surface-1)", "stroke-width": 2}, g);
+      txt(svg, X(0) + w + 6, y + barH / 2 + 4, v.toFixed(2), {fill: "var(--text-primary)", "font-size": 12});
+      bindTip(g, bar, [[v.toFixed(2) + " / 5", `${CRIT_NAME[c]} · ${s.name}`]]);
+    });
+  });
+}
+
+stripChart(); critChart();
+document.getElementById("theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+});
+</script>
+</body>
+</html>

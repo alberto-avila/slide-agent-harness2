@@ -1,0 +1,247 @@
+{
+  "runs": {
+    "business": {
+      "domain": "business",
+      "n_tasks": 2,
+      "seed": null,
+      "done": 2,
+      "failed": 0,
+      "tasks": [
+        {
+          "task": "business/rag-for-execs",
+          "status": "skipped",
+          "library_entries_before": {
+            "agg": 0
+          }
+        },
+        {
+          "task": "business/remote-work-findings",
+          "status": "ok",
+          "library_entries_before": {
+            "agg": 1
+          }
+        }
+      ]
+    }
+  },
+  "judged": [
+    {
+      "task_id": "business/rag-for-execs",
+      "mode": "agg",
+      "k": 2,
+      "chosen_label": "agg1",
+      "why": "",
+      "chosen": {
+        "rules_passed": 8,
+        "rules_total": 8,
+        "rubric_points": 14,
+        "rubric_max": 25,
+        "n_passed": 22,
+        "n_criteria": 33,
+        "rules": {
+          "has_slides": true,
+          "slide_count_near_target": true,
+          "title_slide_first": true,
+          "closing_slide": true,
+          "short_titles": true,
+          "max_bullets": true,
+          "short_bullets": true,
+          "speaker_notes": true
+        },
+        "ratings": {
+          "story": 3,
+          "assertion_titles": 3,
+          "audience_fit": 3,
+          "accuracy": 2,
+          "notes_quality": 3
+        },
+        "reasons": {
+          "story": "Slides 3\u20137 follow a recognizable problem\u2013solution\u2013value\u2013action arc, but Slide 5 supplies no ROI evidence and Slide 7 requests funding without an amount or a demonstrated business case.",
+          "assertion_titles": "Slides 3 and 4 state clear claims, but Slides 2, 5, and 6 largely label topics or promise benefits rather than state specific takeaways supported by their content.",
+          "audience_fit": "Slides 3\u20134 use accessible language and a helpful library analogy, but Slides 5\u20137 omit the costs, timelines, trade-offs, and approval parameters executives need to make an informed decision.",
+          "accuracy": "Slides 4\u20135 incorrectly imply RAG guarantees accurate, traceable answers and secure retrieval, while Slide 6 places governance after scaling even though permissions, data controls, and evaluation are needed before the pilot.",
+          "notes_quality": "Slide 4 adds a useful library analogy and retrieval explanation, but the notes on Slides 5\u20137 mostly expand the bullets with unsupported assurances rather than concrete examples, metrics, or implementation details."
+        },
+        "judge_model": "OpenAILLM:gpt-6-astra"
+      },
+      "base": [
+        {
+          "rules_passed": 8,
+          "rules_total": 8,
+          "rubric_points": 13,
+          "rubric_max": 25,
+          "n_passed": 21,
+          "n_criteria": 33,
+          "rules": {
+            "has_slides": true,
+            "slide_count_near_target": true,
+            "title_slide_first": true,
+            "closing_slide": true,
+            "short_titles": true,
+            "max_bullets": true,
+            "short_bullets": true,
+            "speaker_notes": true
+          },
+          "ratings": {
+            "story": 3,
+            "assertion_titles": 3,
+            "audience_fit": 3,
+            "accuracy": 1,
+            "notes_quality": 3
+          },
+          "reasons": {
+            "story": "Slides 3\u20137 follow a recognizable problem\u2013solution\u2013benefits\u2013action arc, but slide 6 provides no evidence or quantified impact and slide 7 requests no specific executive decision.",
+            "assertion_titles": "Slides 3, 4, and 6 use assertion titles, while slides 2, 5, and 7 primarily label topics or activities, and slide 6 never substantiates its measurable-ROI claim.",
+            "audience_fit": "Slide 4 offers an accessible analogy, but slide 5 introduces unexplained indexing and knowledge-graph terminology while slides 6\u20137 omit the costs, ownership, and decision criteria executives need.",
+            "accuracy": "Slides 4\u20136 incorrectly imply RAG guarantees factual answers based only on vetted material, slide 5 treats a knowledge graph as intrinsic to RAG, and slide 7 postpones governance until after scaling.",
+            "notes_quality": "Notes on slides 4, 5, and 7 add an analogy, business-context examples, and pilot options, but slides 2 and 6 largely elaborate the bullets without supporting data or concrete implementation detail."
+          },
+          "judge_model": "OpenAILLM:gpt-6-astra"
+        },
+        {
+          "rules_passed": 8,
+          "rules_total": 8,
+          "rubric_points": 14,
+          "rubric_max": 25,
+          "n_passed": 22,
+          "n_criteria": 33,
+          "rules": {
+            "has_slides": true,
+            "slide_count_near_target": true,
+            "title_slide_first": true,
+            "closing_slide": true,
+            "short_titles": true,
+            "max_bullets": true,
+            "short_bullets": true,
+            "speaker_notes": true
+          },
+          "ratings": {
+            "story": 3,
+            "assertion_titles": 3,
+            "audience_fit": 3,
+            "accuracy": 2,
+            "notes_quality": 3
+          },
+          "reasons": {
+            "story": "Slides 2\u20136 establish a recognizable problem\u2013solution\u2013benefits\u2013action arc, but no evidence supports the investment case, and Slide 7 repeats benefits rather than ending on the decision.",
+            "assertion_titles": "Slides 2, 3, 4, and 7 state takeaways, but Slides 5 and 6 use roadmap/action labels, and the claimed benefits lack supporting proof.",
+            "audience_fit": "Slide 3 offers an accessible library analogy and Slide 4 emphasizes executive concerns, but Slides 5\u20136 omit the pilot cost, accountable owner, timeline, and measurable thresholds executives need to approve investment.",
+            "accuracy": "Slide 3 incorrectly implies RAG ensures accuracy, Slide 4 promises auditable sources for all answers without specifying controls, and Slide 7 asserts immediate productivity gains without evidence.",
+            "notes_quality": "Slides 2, 3, and 5 add useful examples and explanation, but Slides 4, 6, and 7 largely restate benefits and next steps without evidence, concrete implementation detail, or meaningful caveats."
+          },
+          "judge_model": "OpenAILLM:gpt-6-astra"
+        }
+      ]
+    },
+    {
+      "task_id": "business/remote-work-findings",
+      "mode": "agg",
+      "k": 2,
+      "chosen_label": "agg1",
+      "why": "The deciding criterion is CONFORMANCE. Candidate A adheres perfectly to the requested length of a \"~6-slide presentation,\" maintaining a tight, focused narrative arc. Candidate B includes an unnecessary seventh slide (\"Summary: A Strategic Investment in People\"), which deviates from the requested sh",
+      "chosen": {
+        "rules_passed": 8,
+        "rules_total": 8,
+        "rubric_points": 12,
+        "rubric_max": 25,
+        "n_passed": 20,
+        "n_criteria": 33,
+        "rules": {
+          "has_slides": true,
+          "slide_count_near_target": true,
+          "title_slide_first": true,
+          "closing_slide": true,
+          "short_titles": true,
+          "max_bullets": true,
+          "short_bullets": true,
+          "speaker_notes": true
+        },
+        "ratings": {
+          "story": 3,
+          "assertion_titles": 3,
+          "audience_fit": 3,
+          "accuracy": 1,
+          "notes_quality": 2
+        },
+        "reasons": {
+          "story": "Slides 2\u20136 establish a recognizable risk-to-action arc, but slides 2 and 4 repeat the stakes, and the task force and mandates do not follow convincingly from slide 3\u2019s evidence.",
+          "assertion_titles": "Slides 2\u20134 use assertion titles, but their claims about inconsistent models, biggest blind spots, and direct retention threats exceed what the slides prove, while slides 5\u20136 primarily state actions.",
+          "audience_fit": "Slides 2, 5, and 6 appropriately emphasize retention and policy for HR leadership, but funding and mandate requests lack costs, accountable owners, and implementation trade-offs.",
+          "accuracy": "Slide 3 incorrectly reports a 50% meeting increase instead of approximately 44% and misrepresents the 67% finding, while slides 4\u20135 introduce unsupported causal claims and mandatory policies absent from the source.",
+          "notes_quality": "Slide 2\u2019s notes add a survey statistic, but slides 3\u20136 mostly instruct the presenter to emphasize risk and mandates rather than supply substantive explanation, examples, or implementation detail."
+        },
+        "judge_model": "OpenAILLM:gpt-6-astra"
+      },
+      "base": [
+        {
+          "rules_passed": 8,
+          "rules_total": 8,
+          "rubric_points": 12,
+          "rubric_max": 25,
+          "n_passed": 20,
+          "n_criteria": 33,
+          "rules": {
+            "has_slides": true,
+            "slide_count_near_target": true,
+            "title_slide_first": true,
+            "closing_slide": true,
+            "short_titles": true,
+            "max_bullets": true,
+            "short_bullets": true,
+            "speaker_notes": true
+          },
+          "ratings": {
+            "story": 3,
+            "assertion_titles": 3,
+            "audience_fit": 3,
+            "accuracy": 1,
+            "notes_quality": 2
+          },
+          "reasons": {
+            "story": "Slides 3\u20136 progress recognizably from findings to recommendations, but the retention risk promised on slide 2 never appears, and slides 7\u20138 dilute the ending while expanding the deck beyond the requested roughly six slides.",
+            "assertion_titles": "Slides 3\u20135 use takeaway titles, but slides 2 and 6\u20138 use agenda, topic, or discussion labels rather than specific claims supported by their content.",
+            "audience_fit": "Slides 4\u20136 address relevant HR concerns in accessible language, but omitting the 29% retention risk and ending with generic discussion prompts on slides 7\u20138 weakens the deck's value for HR leadership.",
+            "accuracy": "Slide 3 incorrectly converts current work arrangements into preferences, slide 4 claims significant burnout improvement without supporting analysis, and slide 6 strengthens the onboarding recommendation into a mandate while omitting its first-month scope.",
+            "notes_quality": "Notes on slides 3\u20136 largely paraphrase the bullets or add unsupported judgments such as 'we are failing our new hires,' rather than supplying useful survey context, precise evidence, or implementation detail."
+          },
+          "judge_model": "OpenAILLM:gpt-6-astra"
+        },
+        {
+          "rules_passed": 8,
+          "rules_total": 8,
+          "rubric_points": 12,
+          "rubric_max": 25,
+          "n_passed": 20,
+          "n_criteria": 33,
+          "rules": {
+            "has_slides": true,
+            "slide_count_near_target": true,
+            "title_slide_first": true,
+            "closing_slide": true,
+            "short_titles": true,
+            "max_bullets": true,
+            "short_bullets": true,
+            "speaker_notes": true
+          },
+          "ratings": {
+            "story": 3,
+            "assertion_titles": 3,
+            "audience_fit": 3,
+            "accuracy": 1,
+            "notes_quality": 2
+          },
+          "reasons": {
+            "story": "Slides 2\u20135 establish benefits and risks before recommendations on Slide 6, but the links between findings are weak and Slide 7 repeats the conclusion rather than sharpening the call to action.",
+            "assertion_titles": "Slides 2, 3 and 5 have assertion titles, but Slide 4 offers a broad directive and Slides 6\u20137 use generic headings, while Slide 2's preference claim is not supported by its evidence.",
+            "audience_fit": "Slides 3\u20136 address HR-relevant wellbeing, onboarding and retention in accessible language, but the recommendations lack decision framing and omit team-selected anchor days and the first-month onboarding scope.",
+            "accuracy": "Slide 2 mislabels the 47% hybrid participation rate as preference, Slide 4 converts onboarding ratings into performance, Slide 5 recasts commute preference as job satisfaction, and Slide 3 asserts significant improvement without supporting analysis.",
+            "notes_quality": "Notes on Slides 2\u20137 mostly restate bullets or add generic advocacy, omit useful source details such as the 41% isolation rate and 2.6-versus-3.9 onboarding ratings, and introduce unsupported interpretations on Slides 3 and 5."
+          },
+          "judge_model": "OpenAILLM:gpt-6-astra"
+        }
+      ]
+    }
+  ],
+  "executions": 6,
+  "improver_calls": 8
+}

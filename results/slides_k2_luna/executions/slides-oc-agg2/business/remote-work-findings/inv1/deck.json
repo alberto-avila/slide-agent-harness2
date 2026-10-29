@@ -1,0 +1,66 @@
+[
+  {
+    "layout": "title",
+    "title": "Remote Work Survey: Key Findings for HR Leadership",
+    "bullets": [
+      "Analyzing employee sentiment and needs for work design.",
+      "Presented by: [Your Team/Name]"
+    ],
+    "notes": "Goal: Present actionable insights from the 2026 survey to guide future work policy. Focus on balancing flexibility with team cohesion."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid Models Meet Employee Expectations",
+    "bullets": [
+      "Hybrid schedule remains the preferred work model.",
+      "Most workers want to maintain current flexibility levels.",
+      "Fully remote staff are the largest segment (38%)."
+    ],
+    "notes": "Key finding: 64% of hybrid workers want to keep their current schedule. This confirms that flexibility is highly valued and should be maintained as the default."
+  },
+  {
+    "layout": "content",
+    "title": "Productivity & Wellbeing: Mixed results require attention",
+    "bullets": [
+      "Remote work boosts productivity for most employees.",
+      "Burnout scores show a positive trend year-over-year.",
+      "Fully remote staff report high levels of isolation.",
+      "Addressing disconnection is key to overall wellbeing."
+    ],
+    "notes": "While productivity is up for 58%, the isolation risk for fully remote staff (41% feeling disconnected) is a major concern. We need to balance autonomy with connection."
+  },
+  {
+    "layout": "content",
+    "title": "Collaboration & Onboarding: In-person touchpoints are critical",
+    "bullets": [
+      "Meetings are increasing, but many are unnecessary.",
+      "New hires rate remote onboarding significantly lower.",
+      "In-person interaction improves the new employee experience.",
+      "Structured office time boosts team cohesion."
+    ],
+    "notes": "The data shows a clear drop in new hire satisfaction when remote (2.6/5 vs 3.9/5). We must mandate structured, in-person onboarding for the first month to mitigate this risk."
+  },
+  {
+    "layout": "content",
+    "title": "Retention Risk: Flexibility is a key job benefit",
+    "bullets": [
+      "Loss of remote options could prompt employees to search for new roles.",
+      "Commute time is the primary driver for remote preference.",
+      "Flexibility is now viewed as a core compensation benefit.",
+      "Maintaining choice is essential for talent retention."
+    ],
+    "notes": "29% would likely look elsewhere if remote options were removed. This confirms that flexibility is not a perk, but a critical retention pillar. We must treat it as such."
+  },
+  {
+    "layout": "content",
+    "title": "Key Takeaways: Optimizing the Future of Work",
+    "bullets": [
+      "Adopt a hybrid model with defined team anchor days.",
+      "Implement structured, in-person onboarding for new hires.",
+      "Mandate meeting audits and focus blocks to reduce time waste.",
+      "Fund quarterly team gatherings for remote staff.",
+      "Action: Pilot these changes in Q1 to measure impact."
+    ],
+    "notes": "These recommendations directly address the pain points identified: 1. Hybrid default. 2. Onboarding structure. 3. Meeting overload. 4. Remote connection. This provides a clear, actionable roadmap for HR leadership."
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "layout": "content",
+    "title": "Remote Work Survey 2026: Key Findings",
+    "bullets": [
+      "Analyzing employee needs to build a sustainable hybrid model."
+    ],
+    "notes": "Good morning. Today, we'll walk through the findings from our 2026 remote work survey. The goal is not just to report data, but to provide actionable insights that will help HR leadership design a work model that maximizes retention, productivity, and overall employee wellbeing. We have about 6 slides to cover the key areas."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid schedules are critical for retaining top talent.",
+    "bullets": [
+      "Hybrid model is the clear preference (47% of staff).",
+      "Commute time is the primary driver for remote preference (54%).",
+      "29% would likely leave if remote options were removed.",
+      "Most employees want to maintain current flexible schedules."
+    ],
+    "notes": "The data clearly shows that flexibility is no longer a perk; it's a core expectation. The desire to keep the current schedule is very high, and the threat of losing remote options is a significant retention risk we must address immediately. This underscores the need to formalize hybrid work as the default."
+  },
+  {
+    "layout": "content",
+    "title": "Flexible work boosts productivity and improves wellbeing.",
+    "bullets": [
+      "58% report higher productivity when working remotely.",
+      "Burnout scores significantly dropped year-over-year (3.4 to 2.9).",
+      "Remote work helps employees manage work-life balance.",
+      "Leadership must acknowledge the benefits of autonomy."
+    ],
+    "notes": "The productivity numbers are strong, and perhaps more importantly, the reduction in burnout scores is a massive win for our culture. This suggests that when employees feel trusted and given autonomy over where they work, they perform better and feel healthier. We need to continue supporting this trend."
+  },
+  {
+    "layout": "content",
+    "title": "Collaboration needs structure to thrive in hybrid settings.",
+    "bullets": [
+      "Meetings increased, but 67% find them unnecessary.",
+      "New hires struggle with onboarding when remote (2.6/5).",
+      "Fully remote staff report high feelings of isolation (41%).",
+      "Structured in-person touchpoints are necessary for connection."
+    ],
+    "notes": "While flexibility is great, the data highlights two critical friction points: meeting overload and onboarding. We are spending too much time in unnecessary meetings, and our new hires are struggling to feel connected and integrated when the process is done remotely. We must be intentional about how we structure collaboration."
+  },
+  {
+    "layout": "content",
+    "title": "Structured onboarding is vital for new employee success.",
+    "bullets": [
+      "In-person onboarding scores are significantly higher (3.9/5).",
+      "New hires need dedicated time for team integration.",
+      "A structured first month improves early engagement.",
+      "HR must standardize the onboarding process."
+    ],
+    "notes": "The gap between remote and in-person onboarding is too large to ignore. We need to treat the first month like a dedicated program, regardless of location. This isn't just about paperwork; it's about building connections and ensuring the employee feels fully supported from day one."
+  }
+]

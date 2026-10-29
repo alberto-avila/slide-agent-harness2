@@ -1,0 +1,5 @@
+ollama>=0.4
+python-pptx>=1.0
+pypdf>=4.0
+openai>=1.0
+# Harness2 (vendored, patched for Windows): pip install -e "./vendor_harness2[render]"

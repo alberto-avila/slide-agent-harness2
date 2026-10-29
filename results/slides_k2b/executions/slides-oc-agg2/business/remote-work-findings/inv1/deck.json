@@ -1,0 +1,71 @@
+[
+  {
+    "layout": "title",
+    "title": "Survey Findings: Redefining Work for the Future",
+    "bullets": [
+      "Key Insights for HR Leadership"
+    ],
+    "notes": "Welcome the audience and set the stage. The goal is to transition the conversation from 'where' people work to 'how' they work best."
+  },
+  {
+    "layout": "content",
+    "title": "Agenda: Addressing Modern Work Challenges",
+    "bullets": [
+      "Understanding current work arrangements",
+      "Quantifying risks to retention and culture",
+      "Proposing a structured hybrid framework",
+      "Defining actionable next steps for HR"
+    ],
+    "notes": "Walk through the agenda, emphasizing that the findings are actionable and require strategic HR input."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid Models are Not Working for Everyone",
+    "bullets": [
+      "Majority prefer hybrid or remote options",
+      "Isolation is high for fully remote staff",
+      "Meetings are excessive and often unnecessary"
+    ],
+    "notes": "Focus on the gap between current practice and employee desire. Highlight that the current model is causing disconnection and inefficiency."
+  },
+  {
+    "layout": "content",
+    "title": "Ignoring Flexibility Risks High Turnover and Disengagement",
+    "bullets": [
+      "29% would leave if remote options vanish",
+      "New hires struggle without in-person support",
+      "Commute time is a primary driver for preference"
+    ],
+    "notes": "Emphasize the financial and cultural cost of ignoring the findings. Connect retention directly to the flexibility offered."
+  },
+  {
+    "layout": "content",
+    "title": "Structured Hybrid Work is the Optimal Path Forward",
+    "bullets": [
+      "Default to hybrid with anchor days",
+      "Mandate structured, in-person onboarding",
+      "Implement meeting audits for focus time"
+    ],
+    "notes": "Present this as a strategic shift, not just a suggestion. This is the core recommendation for HR leadership."
+  },
+  {
+    "layout": "content",
+    "title": "Action Plan: Building an Engaged, Flexible Workforce",
+    "bullets": [
+      "Pilot meeting-free focus blocks company-wide",
+      "Fund quarterly team gatherings for remote staff",
+      "Formalize flexible work policies immediately"
+    ],
+    "notes": "This is the call to action. The notes should guide the audience on *how* to implement these changes and who owns them (e.g., HR, Operations)."
+  },
+  {
+    "layout": "content",
+    "title": "Summary: Flexibility Drives Performance and Retention",
+    "bullets": [
+      "Adopt a structured, default hybrid model",
+      "Prioritize in-person connection for new hires",
+      "Implement policies that protect focus time"
+    ],
+    "notes": "Reiterate the main message: Flexibility is not a perk; it is a critical business strategy for retention and productivity. Thank the audience and open for discussion."
+  }
+]

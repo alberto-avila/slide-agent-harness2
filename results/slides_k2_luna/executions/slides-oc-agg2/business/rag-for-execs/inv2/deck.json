@@ -1,0 +1,60 @@
+[
+  {
+    "layout": "content",
+    "title": "Enhancing AI Accuracy with RAG",
+    "bullets": [
+      "A practical path to reliable, enterprise-grade AI"
+    ],
+    "notes": "Good morning. Today, we are going to discuss a critical topic: how to make our AI investments actually work for us. We are moving beyond simple AI adoption and focusing on making it reliable, accurate, and trustworthy. The solution we propose is called Retrieval-Augmented Generation, or RAG. This presentation will show you why RAG is the necessary next step for our business growth."
+  },
+  {
+    "layout": "content",
+    "title": "AI Risks: Why current LLMs are unreliable",
+    "bullets": [
+      "Generating inaccurate or false information",
+      "Lacking context on proprietary data",
+      "Providing outdated or incomplete answers"
+    ],
+    "notes": "The biggest challenge with off-the-shelf LLMs is that they are trained on vast, public datasets. While powerful, this means they can 'hallucinate'\u2014meaning they confidently state something that is factually incorrect. They also don't know about our internal policies, our latest sales figures, or our proprietary research. This lack of grounding creates significant business risk and erodes trust."
+  },
+  {
+    "layout": "content",
+    "title": "RAG: Grounding AI in our company knowledge",
+    "bullets": [
+      "Retrieving relevant internal documents first",
+      "Using facts to inform the AI's answer",
+      "Generating responses that are accurate and traceable"
+    ],
+    "notes": "So, what is RAG? Think of it like this: instead of asking the AI to answer from its general memory, we first give it a specialized, curated library\u2014our company documents. RAG works in two steps: first, it 'retrieves' the most relevant facts from that library. Second, it 'generates' the answer using *only* those retrieved facts. This process makes the AI factual, traceable, and relevant to us."
+  },
+  {
+    "layout": "content",
+    "title": "Business Value: Boosting accuracy and trust",
+    "bullets": [
+      "Reducing operational risk from errors",
+      "Accelerating employee knowledge access",
+      "Building internal confidence in AI tools"
+    ],
+    "notes": "The benefits are immediate and measurable. By grounding the AI in our data, we significantly reduce the risk of costly errors. Employees can get instant, accurate answers to complex questions, which dramatically speeds up workflows. Most importantly, it builds trust. When our teams trust the AI, they adopt it, and we unlock the full potential of our digital transformation."
+  },
+  {
+    "layout": "content",
+    "title": "Our Strategy: A phased approach to adoption",
+    "bullets": [
+      "Phase 1: Pilot with high-value departments",
+      "Phase 2: Expand to core operational areas",
+      "Phase 3: Full integration across the enterprise"
+    ],
+    "notes": "We don't need to flip a switch and implement this everywhere at once. We recommend a phased approach. We start small, perhaps with a pilot project in Legal or HR, where the data is contained and the need for accuracy is critical. Once we prove the value in a controlled environment, we expand incrementally, minimizing risk and maximizing adoption."
+  },
+  {
+    "layout": "content",
+    "title": "Next Steps: Making AI reliable for our business",
+    "bullets": [
+      "Approve funding for a pilot project",
+      "Identify initial high-value use cases",
+      "Form a cross-functional AI task force"
+    ],
+    "notes": "To summarize, RAG is not just a technical upgrade; it is a strategic necessity for managing risk and unlocking growth. Our immediate next step is to approve funding for a focused pilot program. We need to identify the single most painful, data-intensive problem area and apply RAG there. I recommend forming a cross-functional task force\u2014bringing together IT, Legal, and Operations\u2014to guide this effort and ensure alignment across the business."
+  }
+]

@@ -1,0 +1,74 @@
+<div class="tldr">
+<h3 style="margin-top:0">Summary</h3>
+<ul>
+<li><strong>What was built:</strong> a local, tool-calling slide agent (Gemma 4 via Ollama, python-pptx output), connected to
+Google Research's Harness² through a custom benchmark adapter, a pluggable improver, and a separate GPT-6 Astra judge.
+Harness² was made to run natively on Windows with three small patches.</li>
+<li><strong>Experiment:</strong> the full Harness² loop on two business tasks at <code>--k 2</code>, run twice with the same slide-writing model
+(Gemma) and the same 4 baseline decks, changing only the <strong>improver</strong>: local <code>gemma4</code>, then OpenAI's <code>gpt-6-luna</code>.</li>
+<li><strong>Outcome:</strong> with Gemma as improver, the adopted harnesses scored +0.5 and 0 points over the baseline (out of 25), which is noise.
+With Luna they scored <strong>+0.5 and +2.0</strong>, the first gain that reaches the ±1-point noise band's edge. Across all 12 decks
+from each improver's harnesses, the averages were 13.1 (Luna) vs 12.7 (Gemma) vs a 12.75 baseline. This is suggestive, not conclusive: one sample per harness.</li>
+<li><strong>Main finding:</strong> the improver decides <em>what</em> gets optimized. Gemma pushed the harness toward persuasive "mandates" that the
+judge penalized as inaccurate. Luna pushed it toward slide-count discipline and source fidelity, adding an <code>hr_survey_deck</code> skill that
+reads like a list of the judge's own complaints. Its selector also chose on fidelity, where Gemma's chose on slide count.</li>
+<li><strong>Cost:</strong> Luna's improver calls cost <strong>about $0.05</strong> for the whole run (305k tokens). Judging with GPT-6 Astra was the larger API cost.</li>
+</ul>
+</div>
+
+<div class="callout">
+<h3>⚠ Potential conflict: the improver and the judge are both OpenAI models</h3>
+<p>In the Luna run, the model that rewrote the harness (<code>gpt-6-luna</code>) and the model that scored the results (<code>gpt-6-astra</code>) come from
+the same provider and likely share training data and notions of what a good deck looks like. A harness that Luna considers better may score higher with
+Astra partly because the two models <em>agree with each other</em>, not only because the decks got better for a human audience. That would overstate Luna's advantage over Gemma.</p>
+<p>The design limits but does not remove this risk. The improver never sees scores or the rubric; Harness² forbids words like "score" and
+"rubric" in the improver's prompts; and the judge's main complaints (misstated statistics, invented causation) can be checked against the source document.</p>
+<p><strong>We will address this in future work</strong> by testing improvers from other model families against the same judge, for example
+Anthropic's Claude, Google's Gemini, or local models already installed here such as <code>gpt-oss:20b</code> and <code>qwen3</code>, and by cross-checking
+results with a judge from a different family than the improver.</p>
+</div>
+
+<h2>Findings</h2>
+<h3>1. The improver decides what gets optimized</h3>
+<p>Harness² never shows the improver a score, so it can only optimize what it can see in the trajectories and decks.
+<strong>Gemma</strong> rewarded visible structure: both of its adopted harnesses converged on a "mandatory persuasive narrative arc" with business-risk framing,
+and the judge penalized the resulting distortions. Every remote-work deck from Gemma's harnesses scored 1/5 for accuracy.
+<strong>Luna</strong> spotted that the agent kept adding an unplanned seventh slide after the critique step, made the requested slide count binding,
+and on the survey task added a skill whose rules include "do not turn a survey finding into a causal claim" and "preserve qualifiers such as 'likely'".
+That deck was the only remote-work deck in either run to reach 2/5 for accuracy, and it scored 14/25 against a 12/25 baseline.</p>
+
+<h3>2. Luna was more careful about evidence, and that emptied the library</h3>
+<p>For every edit, Luna marked the verdict <em>confounded</em>, because each candidate changed several files at once and so no single contrast isolates an edit.
+Following Harness²'s instructions for that case, it then declined to write a lesson (<code>NO_ENTRY</code>) on both tasks. Gemma, given the same instructions,
+marked every edit "helped" and wrote "high confidence" lessons. Luna's behavior is the correct one, but it meant the library stayed empty and nothing carried over
+from task 1 to task 2, so the Luna run tests single-task improvement only.</p>
+
+<h3>3. The selectors chose differently</h3>
+<p>Gemma's selector decided both tasks on <em>conformance</em> to the slide count ("7 slides vs 8"). Luna's weighed fidelity: "B invents a three-month pilot
+duration… not requested or supported"; "A… calls the burnout decrease 'significant,' which the source does not establish". In all four selections the chosen
+final was the one the judge rated higher, but Luna's reasons are the kind a human reviewer would give.</p>
+
+<h3>4. The slide-writing model still caps quality</h3>
+<p>All 28 decks scored 11–16 out of 25. The best deck of the project was a Luna candidate (<code>rag-for-execs/dom2</code>, 16/25), but it was not one of the
+composed finals Harness² can adopt. Accuracy remains the weakest criterion in every group (means of 1.25 base, 1.42 Gemma-improved, 1.58 Luna-improved).
+Guidance text can reduce errors, but a 4B-class model still misreads statistics; a stronger executor or a fidelity tool is needed for larger gains.</p>
+
+<h3>5. Evaluation hygiene changed the conclusions</h3>
+<p>Several design choices changed the conclusions along the way:</p>
+<ul>
+<li>a judge from a different family than the executor (self-grading Gemma gave all 5s);</li>
+<li>points instead of a pass mark (a 4/5 pass mark hid every difference);</li>
+<li>checking Harness²'s <code>fell_back</code> records (one resumed run silently used the base harness everywhere yet still wrote a confident lesson);</li>
+<li>a shared, reused baseline, so both improvers are compared against identical base decks and scores rather than two noisy re-judgings.</li>
+</ul>
+<p>Gemma's improver also never saw its full evidence: its 60k-character budget dropped files from every composition prompt. Luna saw everything.</p>
+
+<h3>Recommended next steps</h3>
+<ol>
+<li><strong>Test improvers from other model families</strong> (Claude, Gemini, <code>gpt-oss:20b</code>, <code>qwen3</code>) against the same judge, and cross-check with a judge
+from a different family than the improver. This addresses the same-provider conflict above.</li>
+<li><strong>Un-confound the edits</strong> so lessons can be recorded: use <code>--mode sequential</code>, or have candidates change one component at a time, so the improver can attribute effects and fill the library.</li>
+<li><strong>Repeat with more samples</strong> (more tasks, the technical domain, higher <code>--k</code>) before treating a 2-point gain as real.</li>
+<li><strong>Give the agent a fidelity tool</strong>, for example a critique check that compares every number on a slide against the source, so Harness² has a mechanism it can strengthen.</li>
+<li><strong>Keep one pinned judge</strong> for every comparison, and treat differences under about 2 points as noise.</li>
+</ol>

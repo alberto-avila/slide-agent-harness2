@@ -1,0 +1,65 @@
+[
+  {
+    "layout": "title",
+    "title": "Grounding AI for Enterprise Reliability",
+    "bullets": [
+      "A Strategic Path to Safe and Accurate AI Adoption"
+    ],
+    "notes": "Speaker Notes: Start by acknowledging the immense potential of AI, but immediately pivot to the risk. The core message is that potential is useless without reliability. This presentation shows how we can unlock that potential safely."
+  },
+  {
+    "layout": "content",
+    "title": "General AI Models Create Unacceptable Business Risk",
+    "bullets": [
+      "Hallucinations leading to incorrect decisions",
+      "Inability to reference proprietary company data",
+      "Increased compliance and legal exposure",
+      "Operational inefficiency and wasted expert time"
+    ],
+    "notes": "Speaker Notes: This is the pain point. We are not criticizing AI; we are criticizing *uncontrolled* AI. The key risks are that AI models 'make things up' (hallucinate) and they don't know our specific policies, which creates massive compliance and operational risk. This is costing us time and money."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Grounds AI in Our Proprietary Company Data",
+    "bullets": [
+      "Retrieving verified internal documents first",
+      "Providing accurate, source-cited answers",
+      "Eliminating reliance on general external knowledge",
+      "Building a reliable, governed AI system"
+    ],
+    "notes": "Speaker Notes: RAG is the solution mechanism. I must avoid technical terms like 'vector database' or 'chunking.' Instead, I explain it as a process: first, it finds the right internal document, and *then* it answers based only on that document. This makes the AI trustworthy."
+  },
+  {
+    "layout": "content",
+    "title": "Achieve Measurable ROI and Reduce Operational Risk",
+    "bullets": [
+      "Lowering compliance risk exposure by X%",
+      "Accelerating time-to-answer for key staff",
+      "Freeing up expert time for strategic tasks",
+      "Enabling faster, data-backed decision-making"
+    ],
+    "notes": "Speaker Notes: This is the money slide. We need to talk about metrics. Instead of saying 'it's better,' we say 'it saves us X hours' or 'it reduces our risk profile by Y.' This directly addresses the executive's primary concern: the bottom line."
+  },
+  {
+    "layout": "content",
+    "title": "Phased Adoption: A Low-Risk Implementation Path",
+    "bullets": [
+      "Phase 1: Pilot in a contained department (e.g., HR)",
+      "Phase 2: Expand to cross-functional knowledge areas",
+      "Phase 3: Integrate into core operational workflows",
+      "Measure and optimize ROI at each stage"
+    ],
+    "notes": "Speaker Notes: Executives hate big, undefined investments. We must show a phased approach. Start small, prove value, then scale. This minimizes initial capital outlay and allows for continuous course correction."
+  },
+  {
+    "layout": "content",
+    "title": "Next Step: Approve Pilot Funding for Department X",
+    "bullets": [
+      "Allocate resources for a 90-day pilot program",
+      "Designate a cross-functional steering committee",
+      "Define clear success metrics and KPIs",
+      "Begin implementation in a high-value, low-risk area"
+    ],
+    "notes": "Speaker Notes: This is the ask. It must be precise. Don't just say 'let's adopt AI.' Say, 'Let's fund a 90-day pilot in HR to prove we can reduce onboarding time by 20%.' This makes the investment tangible and manageable."
+  }
+]

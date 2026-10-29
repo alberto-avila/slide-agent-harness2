@@ -1,0 +1,65 @@
+[
+  {
+    "layout": "title",
+    "title": "Why RAG is Essential for Our Enterprise AI",
+    "bullets": [
+      "Empowering AI with our proprietary, trusted data sources."
+    ],
+    "notes": "The goal of this presentation is to convince non-technical executives that adopting RAG is critical for moving beyond generic AI tools and building a reliable, proprietary AI layer that enhances decision-making and mitigates risk. We are not selling technology; we are selling trust and actionable intelligence."
+  },
+  {
+    "layout": "content",
+    "title": "General AI Models Lack Our Specific Business Context",
+    "bullets": [
+      "Risk of 'hallucinations' and inaccurate outputs",
+      "Reliance on outdated or public internet data",
+      "Inability to cite proprietary company documents",
+      "Poor performance on niche industry knowledge"
+    ],
+    "notes": "We must emphasize that general LLMs are powerful but are fundamentally unreliable for mission-critical decisions because they lack grounding in our internal knowledge base. This is a risk, not just a technical flaw."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Grounds AI in Our Trusted Company Data",
+    "bullets": [
+      "Retrieving relevant documents first",
+      "Passing context to the AI model",
+      "Generating accurate, cited answers",
+      "A process, not just a single model"
+    ],
+    "notes": "RAG is fundamentally a two-step process: first, we retrieve the most relevant, verified documents from our internal knowledge base; second, we use the LLM to synthesize an answer based *only* on that retrieved context. This makes the output verifiable and trustworthy."
+  },
+  {
+    "layout": "content",
+    "title": "Achieve Reliable, Actionable Insights Across the Enterprise",
+    "bullets": [
+      "Reduce operational risk from inaccurate AI outputs",
+      "Accelerate employee access to proprietary knowledge",
+      "Improve decision-making with cited evidence",
+      "Unlock value from siloed corporate data"
+    ],
+    "notes": "The benefits are not just technical; they are operational. We can reduce the time employees spend searching for information and ensure that every AI-generated recommendation is traceable back to a verified source document. This drives efficiency and trust."
+  },
+  {
+    "layout": "content",
+    "title": "Start Small: Phased Implementation and Proof of Concept",
+    "bullets": [
+      "Identify a high-value, low-risk use case (e.g., HR policies)",
+      "Pilot RAG with a small, dedicated user group",
+      "Measure impact: time saved, accuracy improvement",
+      "Establish governance and data pipelines"
+    ],
+    "notes": "We recommend starting with a Proof of Concept (PoC) in a specific department\u2014perhaps HR or Legal\u2014where the data is structured and the need for accuracy is paramount. This allows us to prove ROI quickly before scaling."
+  },
+  {
+    "layout": "content",
+    "title": "Summary: Building Our Trusted AI Future",
+    "bullets": [
+      "RAG mitigates risk by grounding AI in proprietary data",
+      "Provides reliable, verifiable insights for decision-makers",
+      "Start with a targeted PoC to prove immediate ROI",
+      "Commit to building a foundational, trustworthy AI layer"
+    ],
+    "notes": "This slide serves as the final takeaway. We are not just adopting a tool; we are building a strategic, reliable capability that will drive efficiency and reduce risk across the organization. This is our call to action."
+  }
+]

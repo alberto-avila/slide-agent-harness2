@@ -1,0 +1,74 @@
+[
+  {
+    "layout": "title",
+    "title": "Remote Work Survey: Key Findings for HR Leadership",
+    "bullets": [
+      "Actionable insights for optimizing our work model"
+    ],
+    "notes": "Good morning. Today, we'll walk through the findings from our comprehensive 2026 remote work survey. The goal isn't just to report data, but to provide actionable insights that will help us build a sustainable, high-performing, and engaging work environment for all employees."
+  },
+  {
+    "layout": "content",
+    "title": "Agenda: Key Areas of Focus",
+    "bullets": [
+      "Current work arrangements and employee preferences",
+      "Productivity and wellbeing trends",
+      "Collaboration challenges and new hires",
+      "Strategic recommendations for the future",
+      "Defining our path forward"
+    ],
+    "notes": "We will cover five key areas today. We'll start by reviewing how people are actually working, then dive into the impact on wellbeing and productivity, before discussing the critical need to improve collaboration. Finally, we'll present our strategic recommendations for HR to consider."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid Work is the Clear Employee Preference",
+    "bullets": [
+      "47% favor a hybrid schedule (2-3 days in office)",
+      "64% of hybrid workers wish to maintain current flexibility",
+      "Commute time is the top driver for remote preference"
+    ],
+    "notes": "The data clearly shows that the hybrid model is not just acceptable, it's the preferred model. A significant majority of our employees are comfortable and productive in a hybrid setting. The desire to keep the current schedule is strong, and this is heavily influenced by the reduction in commute time, which is a major quality-of-life factor for our staff."
+  },
+  {
+    "layout": "content",
+    "title": "Productivity is High, But Isolation is a Risk",
+    "bullets": [
+      "58% report increased productivity when remote",
+      "Burnout scores improved significantly (3.4 to 2.9)",
+      "Fully remote staff report high feelings of isolation (41%)"
+    ],
+    "notes": "On the positive side, productivity remains high, and the trend in burnout scores is encouraging, suggesting that the current flexibility is helping wellbeing overall. However, we cannot ignore the isolation risk. The 41% figure for fully remote staff is a critical warning sign that requires immediate attention and structured intervention."
+  },
+  {
+    "layout": "content",
+    "title": "Meetings and Onboarding Need Immediate Structure",
+    "bullets": [
+      "Meeting frequency increased significantly (9 to 13/week)",
+      "67% view at least a third of meetings as unnecessary",
+      "Remote onboarding scores are notably lower (2.6/5)"
+    ],
+    "notes": "Our collaboration patterns are inefficient. The rise in meetings, coupled with the belief that many are unnecessary, indicates a need for process overhaul. Furthermore, the onboarding gap for remote new hires is a retention risk. We must ensure that the initial employee experience is high-touch and in-person."
+  },
+  {
+    "layout": "content",
+    "title": "Action Plan: Building a Sustainable Hybrid Model",
+    "bullets": [
+      "Adopt hybrid as the default, allowing team autonomy",
+      "Implement structured, in-person onboarding for new hires",
+      "Audit meetings and establish 'no-meeting' focus blocks",
+      "Fund quarterly, intentional team gatherings for remote staff"
+    ],
+    "notes": "These four recommendations are our path forward. By adopting hybrid as the default, we empower teams. By structuring onboarding, we protect our new talent. By auditing meetings, we reclaim time. And by funding gatherings, we combat isolation and build connection. These steps will transform our current model into a thriving, connected future."
+  },
+  {
+    "layout": "content",
+    "title": "Summary: Key Insights for HR Leadership",
+    "bullets": [
+      "Hybrid flexibility is the dominant employee expectation",
+      "Isolation and inefficient meetings are critical risks",
+      "Structured collaboration is key to retention and wellbeing",
+      "Action is needed to support a connected future"
+    ],
+    "notes": "To summarize our findings: Flexibility is non-negotiable, but connection is critical. We are seeing productivity gains, but these are undermined by isolation and meeting fatigue. Our focus must be on structuring the *how*\u2014the processes\u2014to support the *where*\u2014the hybrid model. This leads us directly to our recommended action plan."
+  }
+]

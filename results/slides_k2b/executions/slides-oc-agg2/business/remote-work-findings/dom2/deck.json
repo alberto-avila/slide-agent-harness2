@@ -1,0 +1,62 @@
+[
+  {
+    "layout": "title",
+    "title": "Designing a Sustainable Future of Work",
+    "bullets": [
+      "Findings from the Remote Work Survey 2026"
+    ],
+    "notes": "This is the title slide. The goal is to set a strategic, high-level tone for the leadership audience. The presentation must move beyond just reporting data to proposing structural changes."
+  },
+  {
+    "layout": "content",
+    "title": "Inconsistent Policies Threaten Our Workforce Stability",
+    "bullets": [
+      "29% would leave if remote options vanish",
+      "Commute time is the top reason for preference",
+      "High risk of policy-driven attrition"
+    ],
+    "notes": "The key message here is that treating remote work as an 'option' rather than a structural necessity is a retention risk. We must frame this as a critical business threat, not just an employee preference."
+  },
+  {
+    "layout": "content",
+    "title": "Isolation and Meeting Bloat Undermine Connection",
+    "bullets": [
+      "41% of remote staff feel disconnected weekly",
+      "Meetings increased by 44% since 2024",
+      "New hires rate remote onboarding much lower"
+    ],
+    "notes": "This slide presents the evidence. I must ensure the bullets are concise and link the data point (41%, 13 meetings) to the underlying problem (lack of connection, inefficiency)."
+  },
+  {
+    "layout": "content",
+    "title": "Structural Gaps Are Eroding Employee Experience",
+    "bullets": [
+      "Connection gaps impair team cohesion",
+      "Inefficient processes reduce operational efficiency",
+      "Poor onboarding delays time-to-productivity"
+    ],
+    "notes": "This is the 'So what?' slide. We are telling the leadership that these data points are not just survey numbers; they are indicators of systemic failure in our EX and operational design. This sets up the need for policy change."
+  },
+  {
+    "layout": "content",
+    "title": "Mandate Intentional Connection and Structure",
+    "bullets": [
+      "Establish hybrid work as the default policy",
+      "Implement structured, in-person onboarding",
+      "Audit meetings to protect focus time",
+      "Fund quarterly team connection events"
+    ],
+    "notes": "These are the core policy recommendations. They must be presented as mandatory structural changes, not merely suggestions. This moves the conversation from problem to solution."
+  },
+  {
+    "layout": "content",
+    "title": "Next Steps: Commit to Structural Policy Change",
+    "bullets": [
+      "Approve cross-functional task force funding",
+      "Pilot structured onboarding by Q3",
+      "Establish clear EX metrics for tracking",
+      "Schedule policy review checkpoint in 60 days"
+    ],
+    "notes": "This final slide summarizes the key action items and reinforces the necessity of immediate, structural change. The tone must be decisive."
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "layout": "title",
+    "title": "Survey Findings: Defining the Future of Work",
+    "bullets": [
+      "Key Insights from the 2026 Remote Work Survey"
+    ],
+    "notes": "Good morning. Today, we'll walk through the findings from our 2026 remote work survey. The goal isn't just to report data, but to provide actionable insights that will help us define a sustainable and engaging future work model for all employees."
+  },
+  {
+    "layout": "content",
+    "title": "Agenda: Key Areas of Focus",
+    "bullets": [
+      "Understanding current work arrangements",
+      "Assessing productivity and employee wellbeing",
+      "Optimizing collaboration and onboarding",
+      "Identifying key retention risks",
+      "Reviewing actionable recommendations"
+    ],
+    "notes": "We have a lot of data, so I've structured the presentation around five key areas: the current state of work, the human element, collaboration challenges, retention risks, and finally, concrete recommendations for HR to consider."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid Models Remain the Preferred Work Arrangement",
+    "bullets": [
+      "Nearly half prefer a 2-3 day hybrid schedule",
+      "Most hybrid staff want to maintain current balance",
+      "Strong desire for increased remote flexibility",
+      "Only 15% prefer fully on-site work"
+    ],
+    "notes": "The data is clear: hybrid is the sweet spot. While fully remote is popular, the majority of our hybrid workforce is satisfied with their current balance. We also see a significant segment that desires more flexibility, which we need to address."
+  },
+  {
+    "layout": "content",
+    "title": "Productivity is High, But Isolation is a Significant Risk",
+    "bullets": [
+      "58% report higher productivity when remote",
+      "Burnout scores improved significantly (3.4 to 2.9)",
+      "Fully remote staff report high levels of isolation",
+      "41% feel 'disconnected' from team weekly"
+    ],
+    "notes": "This slide highlights a critical paradox. Our employees feel more productive and less burned out overall, which is fantastic. However, this flexibility comes at a cost: isolation. We cannot ignore the emotional and social costs of working remotely."
+  },
+  {
+    "layout": "content",
+    "title": "Collaboration Needs Structure and Intentional Focus",
+    "bullets": [
+      "Meetings increased, with 67% deeming some unnecessary",
+      "New hires rate remote onboarding lower (2.6/5)",
+      "In-person onboarding scores significantly higher (3.9/5)",
+      "Need to protect time for deep, focused work"
+    ],
+    "notes": "Our collaboration methods are inefficient. We are having too many meetings, and the quality of those meetings is questionable. Furthermore, we are failing our new hires when they are remote. We must make collaboration intentional."
+  },
+  {
+    "layout": "content",
+    "title": "Actionable Recommendations for Future Work Design",
+    "bullets": [
+      "Implement hybrid as the default model",
+      "Mandate structured, in-person onboarding",
+      "Run meeting audits and set focus blocks",
+      "Fund quarterly team gatherings for remote staff"
+    ],
+    "notes": "To summarize, the survey team has provided four clear pathways forward. These are not just suggestions; they are necessary structural changes to support our workforce. These actions directly address the pain points we've identified."
+  },
+  {
+    "layout": "content",
+    "title": "Defining Our Path Forward Together",
+    "bullets": [
+      "Prioritize flexibility while maintaining connection",
+      "Invest in structured support for all employees",
+      "Define clear guidelines for hybrid work",
+      "Schedule deep-dive sessions on implementation"
+    ],
+    "notes": "In conclusion, the future of work is flexible, but it cannot be unstructured. We must proactively design the framework that supports both productivity and connection. I recommend we schedule dedicated follow-up sessions to build out the implementation plan for these recommendations."
+  },
+  {
+    "layout": "content",
+    "title": "Questions & Discussion",
+    "bullets": [
+      "What are your immediate concerns?",
+      "How can we best support remote teams?",
+      "What resources do you need to succeed?",
+      "Let's discuss implementation timelines."
+    ],
+    "notes": "I'd like to open the floor now for questions. I'm happy to dive deeper into any of the findings or recommendations we discussed today. What are your thoughts on how we move forward?"
+  }
+]

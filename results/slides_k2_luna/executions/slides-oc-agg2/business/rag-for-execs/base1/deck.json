@@ -1,0 +1,77 @@
+[
+  {
+    "layout": "title",
+    "title": "Securing AI Reliability for Business Growth",
+    "bullets": [
+      "Adopting RAG to ground AI in company data"
+    ],
+    "notes": "Good morning. Today, we are discussing how to move beyond the hype of generative AI and implement it in a way that is reliable, trustworthy, and directly connected to our company's unique knowledge base. The goal is to mitigate risk while maximizing value."
+  },
+  {
+    "layout": "content",
+    "title": "Our Plan: From Risk to Reliable AI",
+    "bullets": [
+      "Understanding current AI limitations",
+      "Defining RAG and its core value",
+      "Connecting AI to our internal data",
+      "Quantifying the business impact",
+      "Our phased implementation roadmap"
+    ],
+    "notes": "Over the next few minutes, we will walk through a clear path. First, we'll address the current risks with off-the-shelf LLMs. Then, we'll introduce RAG as the solution, show how it uses our proprietary data, quantify the benefits, and finally, outline a practical implementation roadmap."
+  },
+  {
+    "layout": "content",
+    "title": "Generic AI Models Cannot Trust Our Proprietary Data",
+    "bullets": [
+      "Hallucinations: Generating false but confident information",
+      "Knowledge Cutoffs: Using outdated or incomplete data",
+      "Lack of Source Citation: Inability to prove where answers came from",
+      "Security Risk: Exposure of sensitive internal information"
+    ],
+    "notes": "The biggest risk with off-the-shelf LLMs is that they are trained on the public internet. They don't know about our specific policies, our client history, or our latest internal research. This leads to 'hallucinations'\u2014making up facts\u2014which is unacceptable when making business decisions. We need AI that is grounded in *our* truth."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Gives AI the Ability to Cite Its Sources",
+    "bullets": [
+      "Retrieval: Finding relevant internal documents first",
+      "Augmentation: Using those documents to guide the answer",
+      "Generation: Creating a factual, grounded response",
+      "The result: Trustworthy, verifiable insights"
+    ],
+    "notes": "Think of a generic LLM as a brilliant but unreliable student who reads everything on Wikipedia. RAG is like giving that student a curated, locked-down library containing only our company's best manuals and reports. The AI first *retrieves* the correct documents, and *then* it *generates* the answer based only on that vetted material. This dramatically increases accuracy and accountability."
+  },
+  {
+    "layout": "content",
+    "title": "Making Our Proprietary Knowledge the AI's Core Asset",
+    "bullets": [
+      "Indexing: Structuring all internal documents (policies, reports)",
+      "Connecting Data: Linking AI queries to specific data sources",
+      "Contextual Answers: Providing answers specific to our operations",
+      "Unlocking Value: Turning siloed data into actionable intelligence"
+    ],
+    "notes": "This is the critical difference. We aren't just feeding it data; we are building a structured knowledge graph around our most valuable assets\u2014our internal documents. This ensures that every answer is relevant to *our* business context, whether it's a specific product line, a regional policy, or a client contract."
+  },
+  {
+    "layout": "content",
+    "title": "RAG Delivers Measurable ROI Across Key Departments",
+    "bullets": [
+      "Reducing operational risk from inaccurate AI output",
+      "Accelerating employee time-to-answer and onboarding",
+      "Improving decision quality with cited facts",
+      "Freeing up expert time for high-value strategy"
+    ],
+    "notes": "The return on investment is not just about 'better AI.' It's about tangible business outcomes. We project significant reductions in time spent searching for information, fewer compliance errors due to hallucination, and faster decision cycles because the data is always accurate and cited."
+  },
+  {
+    "layout": "content",
+    "title": "Next Steps: Building Our Trustworthy AI Infrastructure",
+    "bullets": [
+      "Phase 1: Pilot Program (Select department & data set)",
+      "Phase 2: Integration & Scaling (Expand to core business units)",
+      "Phase 3: Governance & Optimization (Establish policies and monitoring)",
+      "Commitment: Start building our reliable AI infrastructure"
+    ],
+    "notes": "We recommend a phased approach. We don't need to overhaul everything at once. We should start with a small, contained pilot\u2014perhaps the legal department or internal IT\u2014to prove the concept and refine the process. This allows us to manage risk while building confidence and proving the ROI before scaling across the entire enterprise."
+  }
+]

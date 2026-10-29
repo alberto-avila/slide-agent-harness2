@@ -1,0 +1,35 @@
+<file path="context/harness/guardrails.md">
+Best practices to follow:
+1. One idea per slide. The title should state the takeaway (an assertion), not just a topic.
+2. Follow the 6x6 guideline: at most 6 bullets per slide and about 6-10 words per bullet.
+3. Keep titles short (no more than ~8 words).
+4. Structure: title slide -> agenda -> content sections -> summary/key takeaways -> Q&A or next steps.
+5. Tell a story: problem -> why it matters -> solution/insight -> evidence -> call to action.
+6. Put details in the speaker notes, not on the slide.
+7. Use parallel grammar in bullets and avoid full sentences or paragraphs.
+8. Aim for about 1 slide per 1-2 minutes of talk time; most decks have 8-15 slides.
+9. Tailor vocabulary and depth to the stated audience.
+10. End with a clear takeaway or call to action.
+11. **Executive Focus:** All content must frame technical concepts (like RAG) in terms of measurable business outcomes (ROI, risk reduction, efficiency gains). Avoid technical jargon unless immediately defined by a business impact.
+</file>
+<file path="context/harness/LongTermMEMORY.md">
+# Domain Knowledge: Executive Presentation Design for Technology Adoption
+
+## Audience Guidance (Non-Technical Executives)
+*   **Focus:** The primary concern is business value, risk mitigation, and strategic investment, not technical implementation details.
+*   **Language:** Use business metrics (ROI, TCO, operational risk, compliance, time-to-market).
+*   **Depth:** High-level conceptual understanding is sufficient. Avoid explaining *how* RAG works (e.g., indexing, chunking); instead, explain *what* it allows the business to do (e.g., "answers grounded in company policy").
+*   **Tone:** Confident, authoritative, and solution-oriented.
+
+## Required Deck Structure (Technology Adoption Pitch)
+A successful pitch must follow this narrative arc:
+1.  **The Problem (The Pain):** Identify a critical, costly business pain point that current processes or tools fail to solve (e.g., "General AI models hallucinate, creating compliance risk").
+2.  **The Solution (The Insight):** Introduce the technology as the necessary solution to the pain point (e.g., "RAG grounds AI in our proprietary data").
+3.  **The Value Proposition (The Benefit):** Quantify the benefit in terms of business metrics (e.g., "Reduces compliance risk by X%" or "Saves Y hours of expert time").
+4.  **The Roadmap & CTA (The Ask):** Present a phased, manageable plan and a clear, actionable request for investment or resources.
+
+## Consistency Checks
+*   **Problem/Solution Link:** Every technical limitation mentioned in the Problem section must be explicitly addressed by a feature or benefit in the Solution section.
+*   **CTA Alignment:** The Call to Action (CTA) must logically follow the demonstrated value and be a clear, next-step investment request (e.g., "Approve funding for a pilot program in Department X").
+</file>
+<notes>I updated `guardrails.md` to reinforce the executive focus and the required story arc elements, making the constraints more explicit. I created `LongTermMEMORY.md` to encode the domain knowledge for executive communication, defining the required structure (Problem -> Solution -> Value -> CTA) and the necessary vocabulary shift from technical mechanics to business outcomes (ROI, risk, efficiency). This provides the agent with a structured, reusable guide for the specific domain and audience.</notes>

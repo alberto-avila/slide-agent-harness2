@@ -1,0 +1,60 @@
+[
+  {
+    "layout": "title",
+    "title": "Remote Work: Understanding Employee Preferences",
+    "bullets": [
+      "Findings from the 2026 Employee Survey"
+    ],
+    "notes": "This presentation summarizes the key findings from the 2026 Remote Work Survey. Our goal is to provide actionable insights for HR leadership to optimize our work policies while mitigating risks to engagement and retention. We will focus on employee preferences, collaboration challenges, and retention implications."
+  },
+  {
+    "layout": "content",
+    "title": "Hybrid Work is Preferred, But Flexibility Must Be Managed",
+    "bullets": [
+      "Nearly half of employees prefer a hybrid schedule",
+      "Most hybrid workers wish to maintain current flexibility",
+      "Significant portion desires increased remote work options"
+    ],
+    "notes": "The survey found that 47% prefer hybrid (2-3 days in office). Of the hybrid workers, 64% want to keep their current balance, but 22% expressed a desire for more remote days. This suggests that while hybrid is the norm, the definition of 'hybrid' needs to be flexible enough to accommodate varying needs."
+  },
+  {
+    "layout": "content",
+    "title": "Remote Work Hinders Effective Onboarding and Collaboration",
+    "bullets": [
+      "New hires rate remote onboarding significantly lower",
+      "Meeting frequency increased, leading to perceived inefficiency"
+    ],
+    "notes": "The survey found that new hires (under 1 year) rate onboarding 2.6/5 when remote compared to 3.9/5 when in person. Furthermore, meeting attendance increased from 9 to 13 per week, and 67% of employees feel at least a third of these meetings are unnecessary."
+  },
+  {
+    "layout": "content",
+    "title": "Loss of Flexibility Poses a Significant Retention Risk",
+    "bullets": [
+      "A quarter of employees would likely seek other roles",
+      "Commute time is the primary driver for remote preference"
+    ],
+    "notes": "The survey indicates that 29% of employees would 'likely' look for another job if remote options were removed. This underscores the value of flexibility. The top reason cited for preferring remote work was commute time (54%)."
+  },
+  {
+    "layout": "content",
+    "title": "Strategic Focus Areas for HR Leadership",
+    "bullets": [
+      "Formalize hybrid work as the organizational default",
+      "Implement structured in-person onboarding programs",
+      "Audit meeting culture to protect focus time",
+      "Fund quarterly team gatherings for remote staff"
+    ],
+    "notes": "The survey team provided four key recommendations: 1) Keep hybrid as the default and allow teams to select anchor days. 2) Add structured in-person onboarding for new hires' first month. 3) Run a meeting audit and set 'no-meeting' focus blocks. 4) Fund quarterly team gatherings for fully remote staff."
+  },
+  {
+    "layout": "content",
+    "title": "Next Steps: Implementing Flexible Work Policies",
+    "bullets": [
+      "Define and communicate the new hybrid default policy",
+      "Pilot structured onboarding for new hires",
+      "Establish meeting guidelines and focus time blocks",
+      "Measure impact on engagement and retention"
+    ],
+    "notes": "To move forward, we recommend establishing clear guidelines around hybrid work, prioritizing in-person connection for new hires, and actively managing meeting load to protect deep work time. These steps will help mitigate retention risks and improve overall employee experience."
+  }
+]

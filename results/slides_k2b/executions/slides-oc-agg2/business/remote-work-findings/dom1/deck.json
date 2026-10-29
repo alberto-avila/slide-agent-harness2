@@ -1,0 +1,65 @@
+[
+  {
+    "layout": "title",
+    "title": "Defining the Sustainable Future of Work",
+    "bullets": [
+      "Findings from the Remote Work Survey 2026"
+    ],
+    "notes": "Good morning. The purpose of this presentation is to translate the data from our comprehensive 2026 employee survey into actionable policy recommendations. We need to define a sustainable, high-performing work model that supports our talent and minimizes operational risk."
+  },
+  {
+    "layout": "content",
+    "title": "Current Model Risks Burnout and Isolation",
+    "bullets": [
+      "Isolation is impacting team connection and morale.",
+      "Inefficient meeting culture drains employee time.",
+      "Lack of structure increases operational risk.",
+      "Retention is threatened if flexibility is removed."
+    ],
+    "notes": "The survey highlights that while productivity can be high remotely, the cost is a significant decline in social connection and a feeling of being disconnected. We are seeing early signs of burnout, and if we don't address the structural issues, we risk losing our top talent."
+  },
+  {
+    "layout": "content",
+    "title": "41% Feel Disconnected from Team Life",
+    "bullets": [
+      "Fully remote staff report high weekly isolation.",
+      "New hires rate remote onboarding much lower (2.6/5).",
+      "Meeting frequency increased by 44% since 2024.",
+      "29% would leave if remote options were removed."
+    ],
+    "notes": "These numbers are critical. The 41% isolation figure is a direct measure of our cultural health. Furthermore, the onboarding gap shows that remote work, if unstructured, fails to integrate new talent effectively. These are not just 'feelings'; they are measurable risks to our workforce."
+  },
+  {
+    "layout": "content",
+    "title": "Adopt a Hybrid Default Policy",
+    "bullets": [
+      "Formalize hybrid work as the standard model.",
+      "Implement structured, in-person onboarding.",
+      "Mandate meeting audits and focus time blocks.",
+      "Fund quarterly team gatherings for connection."
+    ],
+    "notes": "Our recommendation is not to return to the office, but to formalize a 'hybrid default.' This means setting clear expectations, like defining anchor days, and crucially, investing in structured support for new hires and remote team cohesion."
+  },
+  {
+    "layout": "content",
+    "title": "Policies Will Boost Retention and Wellbeing",
+    "bullets": [
+      "Increased employee engagement and morale.",
+      "Reduced operational risk and burnout rates.",
+      "Improved talent acquisition and integration.",
+      "Higher job satisfaction and loyalty scores."
+    ],
+    "notes": "By implementing these structural policies, we are not just improving 'feelings'; we are directly addressing the root causes of attrition. We expect to see measurable improvements in retention rates and overall employee wellbeing, which translates directly to a more stable and productive workforce."
+  },
+  {
+    "layout": "content",
+    "title": "Next Step: Design the Future Work Policy",
+    "bullets": [
+      "Form a cross-functional task force immediately.",
+      "Allocate resources for policy design and rollout.",
+      "Establish clear guidelines for hybrid scheduling.",
+      "Define KPIs for measuring policy success."
+    ],
+    "notes": "To move forward, we need executive buy-in to form a dedicated task force. This group will be responsible for drafting the specific, measurable policies\u2014the 'Future Work Policy'\u2014and defining the metrics we will use to prove its success. This is our immediate ask."
+  }
+]

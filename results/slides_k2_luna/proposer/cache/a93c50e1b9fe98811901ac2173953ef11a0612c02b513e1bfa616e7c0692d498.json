@@ -1,0 +1,1 @@
+{"label": "agg1.a1", "model": "openai:gpt-6-luna", "usage": {"input": 23444, "output": 2119}, "text": "<notes>\nkept -> base harness unchanged -> Both base rollouts produced a saved deck, while the candidate evidence is one rollout per edit; INV1 fit six slides but added unsupported Q1 timing, and DOM2 still made unsupported causal and policy claims.\n</notes>"}

@@ -1,0 +1,26 @@
+# Secrets: only .env.example (empty values) is committed
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Local run data (contains absolute paths; share via results/ after `python -m h2.scrub_paths`)
+runs/
+output/
+
+# Tool and editor state
+.deepeval/
+.vscode/
+.idea/
+.claude/
+*.lock
+Thumbs.db
+desktop.ini
+~$*.pptx

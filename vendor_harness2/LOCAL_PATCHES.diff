@@ -1,0 +1,133 @@
+diff --git a/harness2/core/context.py b/harness2/core/context.py
+index 72f2868..296a2bf 100644
+--- a/harness2/core/context.py
++++ b/harness2/core/context.py
+@@ -102,6 +102,27 @@ class ContextTree:
+         return "\n".join(lines)
+ 
+ 
++def _rmtree_retry(path: Path, attempts: int = 6) -> None:
++    """Local patch: on Windows, sync clients and indexers briefly lock folders, so a delete
++    can fail with 'Access is denied'; retry instead of failing the whole stage."""
++    import os
++    import stat
++    import time
++
++    def _clear_readonly(func, p, _exc):
++        os.chmod(p, stat.S_IWRITE)
++        func(p)
++
++    for i in range(attempts):
++        try:
++            shutil.rmtree(path, onexc=_clear_readonly)
++            return
++        except PermissionError:
++            if i == attempts - 1:
++                raise
++            time.sleep(1 + i)
++
++
+ def build(
+     dest: Path | str,
+     adapter: BenchmarkAdapter,
+@@ -124,7 +145,7 @@ def build(
+     dest = Path(dest)
+ 
+     if dest.exists():
+-        shutil.rmtree(dest)
++        _rmtree_retry(dest)
+     dest.mkdir(parents=True, exist_ok=True)
+     trunc = obs_trunc if obs_trunc is not None else adapter.spec.obs_trunc
+ 
+diff --git a/harness2/core/proposer.py b/harness2/core/proposer.py
+index 4a23507..d130630 100644
+--- a/harness2/core/proposer.py
++++ b/harness2/core/proposer.py
+@@ -522,7 +522,7 @@ def _call_fingerprint(label: str, mission: str, system: str, context_dir: Path |
+             for p in sorted(root.rglob("*")):
+                 if not p.is_file() or "__pycache__" in p.parts:
+                     continue
+-                h.update(str(p.relative_to(root)).encode("utf-8", errors="replace"))
++                h.update(p.relative_to(root).as_posix().encode("utf-8", errors="replace"))
+                 h.update(b"\0")
+                 try:
+                     with p.open("rb") as fh:
+diff --git a/harness2/core/runmark.py b/harness2/core/runmark.py
+index 1de5794..e8c4f47 100644
+--- a/harness2/core/runmark.py
++++ b/harness2/core/runmark.py
+@@ -51,7 +51,7 @@ def fingerprint(harness_dir: Path | None) -> str:
+     for p in sorted(root.rglob("*")):
+         if not p.is_file() or p.name == MARK or _ignored(p):
+             continue
+-        h.update(str(p.relative_to(root)).encode())
++        h.update(p.relative_to(root).as_posix().encode())
+         h.update(b"\0")
+         try:
+             h.update(p.read_bytes())
+diff --git a/harness2/core/schedule.py b/harness2/core/schedule.py
+index f91f450..93b8598 100644
+--- a/harness2/core/schedule.py
++++ b/harness2/core/schedule.py
+@@ -291,11 +291,28 @@ def _write_summary(summary_path: Path, res: TaskResult) -> None:
+ 
+     Modes may be written by separate processes, so records accumulate per mode.
+     """
+-    import fcntl
++    # Local patch: fcntl is POSIX-only; fall back to msvcrt locking on Windows.
++    try:
++        import fcntl
++
++        def _lock(f):
++            fcntl.flock(f, fcntl.LOCK_EX)
++
++        def _unlock(f):
++            fcntl.flock(f, fcntl.LOCK_UN)
++    except ImportError:
++        import msvcrt
++
++        def _lock(f):
++            msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
++
++        def _unlock(f):
++            f.seek(0)
++            msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
+ 
+     lock = summary_path.with_suffix(".lock")
+     with open(lock, "w") as lf:
+-        fcntl.flock(lf, fcntl.LOCK_EX)
++        _lock(lf)
+         try:
+             merged = res.to_dict()
+             if summary_path.is_file():
+@@ -325,7 +342,7 @@ def _write_summary(summary_path: Path, res: TaskResult) -> None:
+             tmp.write_text(json.dumps(merged, indent=2, default=str))
+             os.replace(tmp, summary_path)
+         finally:
+-            fcntl.flock(lf, fcntl.LOCK_UN)
++            _unlock(lf)
+ 
+ 
+ def _resolve_libraries(
+diff --git a/harness2/core/tree.py b/harness2/core/tree.py
+index c9bf134..b5d5a74 100644
+--- a/harness2/core/tree.py
++++ b/harness2/core/tree.py
+@@ -137,7 +137,7 @@ def read_tree(surface: SurfaceSpec, d: Path | str, *, rejected: list[str] | None
+     for p in sorted(d.rglob("*")):
+         if not p.is_file() or "__pycache__" in p.parts:
+             continue
+-        rel = str(p.relative_to(d))
++        rel = p.relative_to(d).as_posix()
+         if rel in stubs:
+             continue
+         if not is_allowed(surface, rel):
+@@ -164,7 +164,7 @@ def write_tree(surface: SurfaceSpec, tree: Tree, dest: Path | str, *, stubs: boo
+     for p in sorted(dest.rglob("*"), reverse=True):
+         if not p.is_file():
+             continue
+-        rel = str(p.relative_to(dest))
++        rel = p.relative_to(dest).as_posix()
+         if is_allowed(surface, rel) or rel in stub_set:
+             p.unlink()
+     for a in surface.always_on:
